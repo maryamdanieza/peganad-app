@@ -1,6 +1,11 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
+/** Ion Content Global Style **/
+ion-content {
+  --background: #f5f6f9;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
