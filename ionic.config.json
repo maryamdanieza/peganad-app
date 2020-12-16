@@ -1,0 +1,7 @@
+{
+  "name": "meranaw_learning_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
