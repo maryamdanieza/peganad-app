@@ -5,7 +5,7 @@ A Capstone Project
 ```bash
 Download the zip file or clone it and then go to the folder you downloaded the project or cloned it.
 ```
-## Install NodeJS 14.x
+## Install NodeJS 14.x LTS
 ```bash
 You'll need to install nodejs in order to download the dependencies and plugins you need. here's the link ==> https://nodejs.org/en/
 ```
