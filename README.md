@@ -7,7 +7,7 @@ Download the zip file or clone it and then go to the folder you downloaded the p
 ```
 ## Install NodeJS 14.x
 ```bash
-You'll need to install nodejs in order to download the dependencies and plugins you need.
+You'll need to install nodejs in order to download the dependencies and plugins you need. here's the link ==> https://nodejs.org/en/
 ```
 
 ## Install Ionic 5.x
@@ -31,4 +31,4 @@ ionic serve
 npm run build
 ```
 
-### By: Danieza M. Sarip
+### This project is Developed by: Danieza M. Sarip
