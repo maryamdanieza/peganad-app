@@ -1,8 +1,10 @@
 <template>
   <ion-page>
-    <Header name="Home"></Header>
-    <ion-content >
-      <Card></Card>
+    <Header></Header>
+    <ion-content>
+      <div class="card-center">
+        <Card></Card>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -25,4 +27,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.card-center {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>

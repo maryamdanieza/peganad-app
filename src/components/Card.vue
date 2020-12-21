@@ -1,27 +1,25 @@
 <template>
-  <ion-card class="learn" button="true" color="primary">
-    <ion-card-header>
-      <ion-card-title class="card-title">Ready to learn?</ion-card-title>
-      <ion-card-subtitle>LEARN SOME WORDS!</ion-card-subtitle>
-    </ion-card-header>
+  <div class="card-main">
+    <ion-card
+      class="learn"
+      button="true"
+      color="primary"
+      href="/game"
+      router-direction="forward"
+    >
+      <ion-card-header>
+        <ion-card-title class="card-title">Learn</ion-card-title>
+        <ion-card-subtitle>LEARN SOME WORDS!</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
 
-    <ion-card-content>
-      Keep close to Nature's heart....... and break clear away, once in awhile, and
-      climb a mountain or spend a week in the woods. Wash your spirit clean.
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card class="game" button="true" color="primary">
-    <ion-card-header>
-      <ion-card-title>Practice</ion-card-title>
-      <ion-card-subtitle>PLAY SOME GAMES!</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      Keep close to Nature's heart... and break clear away, once in awhile, and
-      climb a mountain or spend a week in the woods. Wash your spirit clean.
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="game" button="true" color="primary">
+      <ion-card-header>
+        <ion-card-title>Games</ion-card-title>
+        <ion-card-subtitle>PLAY SOME GAMES!</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -31,7 +29,7 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonCardContent,
+  // IonNav
 } from "@ionic/vue";
 
 export default defineComponent({
@@ -41,7 +39,7 @@ export default defineComponent({
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonCardContent,
+    // IonNav
   },
   setup() {
     return {};
@@ -49,13 +47,32 @@ export default defineComponent({
 });
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Langar&display=swap");
-ion-card {
-  height: 50%;
-}
 ion-card-title {
   font-family: "Langar", cursive;
   font-size: 3em;
+}
+
+ion-card-header {
+  height: 150px;
+}
+
+.card-main {
+  width: 100%;
+}
+
+.learn {
+  background-image: url(../../public/assets/learning.svg);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: right;
+}
+
+.game {
+  background-image: url(../../public/assets/gaming.svg);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: right;
 }
 </style>
