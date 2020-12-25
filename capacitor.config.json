@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "meranaw_learning_app",
+  "appId": "com.daniezadev.meranawlearningapp",
+  "appName": "Meranaw Learning App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",
