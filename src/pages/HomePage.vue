@@ -1,5 +1,8 @@
 <template>
-  <base-layout pageTitle="Meranaw Learning App" toolbarColor="">
+  <base-layout
+    pageTitle="Meranaw Learning App"
+    toolbarColor=""
+  >
     <div class="card-container">
       <div class="card-wrapper">
         <ion-card

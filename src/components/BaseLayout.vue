@@ -3,15 +3,17 @@
     <ion-header class="ion-no-border">
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
-          <ion-button
-            v-if="$route.fullPath != '/game' && $route.fullPath != '/learn'"
-          >
-            <ion-icon slot="icon-only" :icon="grid"></ion-icon>
-          </ion-button>
           <ion-back-button
-            v-else
+            v-if="
+              $route.fullPath != '/tabs/home' &&
+                $route.fullPath != '/tabs/leaderboard' &&
+                $route.fullPath != '/tabs/profile'
+            "
             :default-href="pageDefaultBackLink"
           ></ion-back-button>
+          <ion-button v-else>
+            <ion-icon slot="icon-only" :icon="grid"></ion-icon>
+          </ion-button>
         </ion-buttons>
         <ion-title>{{ pageTitle }}</ion-title>
       </ion-toolbar>
@@ -60,6 +62,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

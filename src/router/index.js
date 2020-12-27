@@ -32,14 +32,18 @@ const routes = [
     ],
   },
   {
-    path: "/game",
-    name: "Game",
-    component: () => import("../pages/GamePage.vue"),
-  },
-  {
     path: "/learn",
     name: "Learn",
     component: () => import("../pages/LearnPage.vue"),
+  },
+  {
+    path: "/learn/:id",
+    component: () => import("../pages/learn/LearnContentPage.vue"),
+  },
+  {
+    path: "/game",
+    name: "Game",
+    component: () => import("../pages/GamePage.vue"),
   },
 ];
 
