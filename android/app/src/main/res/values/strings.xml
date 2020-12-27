@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Meranaw Learning App</string>
+    <string name="title_activity_main">Meranaw Learning App</string>
+    <string name="package_name">com.daniezadev.meranawlearningapp</string>
+    <string name="custom_url_scheme">com.daniezadev.meranawlearningapp</string>
+</resources>

@@ -17,7 +17,7 @@
         <ion-col class="ion-no-padding" size="12">
           <ion-slides pager="true" :options="slideOpts">
             <ion-slide v-for="(card, index) in cards" :key="index">
-              <ion-card :color="card.color" routerLink="/">
+              <ion-card :color="card.color" :routerLink="card.link">
                 <ion-card-header class="ion-padding-top">
                   <ion-card-title
                     ><h2>{{ card.title }}</h2></ion-card-title
@@ -48,29 +48,31 @@ import {
   IonCardHeader,
   IonCardTitle,
 } from "@ionic/vue";
-import { Plugins } from "@capacitor/core";
-const { StatusBar } = Plugins;
 
 const cards = [
   {
     color: "secondary",
     title: "Words",
     img: "graduate.svg",
+    link: "/learn/words",
   },
   {
     color: "success",
     title: "Animals",
     img: "learning.svg",
+    link: "/learn/animals",
   },
   {
     color: "violet",
     title: "Colors",
     img: "gaming.svg",
+    link: "/learn/colors",
   },
   {
     color: "orange",
     title: "Numbers",
     img: "game.svg",
+    link: "/learn/numbers",
   },
 ];
 
@@ -87,14 +89,6 @@ export default {
     IonCardHeader,
     IonCardTitle,
   },
-
-  created() {
-    console.log(StatusBar)
-    StatusBar.setBackgroundColor({
-      color: "#eb445a",
-    });
-  },
-
   data() {
     return {
       cards: cards,
