@@ -1,5 +1,5 @@
 <template>
-  <base-layout pageTitle="Game" toolbarColor="success" pageDefaultBackLink="/">
+  <base-layout pageTitle="Game" toolbarColor="orange" pageDefaultBackLink="/">
     <ion-grid class="game-header">
       <ion-row>
         <ion-col size="12">
@@ -10,7 +10,7 @@
     <ion-grid class="game-content">
       <ion-row>
         <ion-col size="12">
-          <ion-text color="success">
+          <ion-text color="orange">
             <h4 class="ion-text-center">Games for you</h4>
           </ion-text>
         </ion-col>
@@ -100,7 +100,7 @@ export default {
 
 <style scoped>
 ion-grid.game-header {
-  background: #2dd36f;
+  background: #faa329;
   border-radius: 0px 0px 30px 30px;
   display: flex;
   justify-content: center;
