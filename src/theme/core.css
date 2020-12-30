@@ -5,7 +5,7 @@ ion-content {
 
 /** Home, Leaderboard and Profile Page Background Image **/
 div.card-container {
-  background-image: url("../../public/assets/sarimanokbg.png");
+  background-image: url("../../public/assets/design/sarimanokbg.png");
   height: 100%;
 }
 

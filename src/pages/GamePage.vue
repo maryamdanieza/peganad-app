@@ -3,7 +3,7 @@
     <ion-grid class="game-header">
       <ion-row>
         <ion-col size="12">
-          <img class="img-header" src="../../public/assets/gaming.svg" />
+          <img class="img-header" src="../../public/assets/design/gaming.svg" />
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -25,7 +25,7 @@
                 </ion-card-header>
                 <img
                   class="img-slides"
-                  :src="require(`../../public/assets/${card.img}`)"
+                  :src="require(`../../public/assets/design/${card.img}`)"
                 />
               </ion-card>
             </ion-slide>
