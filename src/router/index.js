@@ -38,7 +38,7 @@ const routes = [
   },
   {
     path: "/learn/:id",
-    component: () => import("../pages/learn/LearnContentPage.vue"),
+    component: () => import("../pages/learn/LearnPageContent.vue"),
   },
   {
     path: "/game",
