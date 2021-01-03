@@ -15,7 +15,43 @@
 import GameAndLearnCardContent from "../../components/cards/GameAndLearnCardContent.vue";
 
 const contents = {
-  words: [{ id: "1", color: "secondary", name: "Words", img: "cat.png" }],
+  words: [
+    {
+      id: "1",
+      color: "secondary",
+      name: "Walking",
+      translatedName: "P'lalakaw",
+      img: "walking.png",
+    },
+    {
+      id: "2",
+      color: "danger",
+      name: "Chicken",
+      translatedName: "Tuturog'n",
+      img: "sleeping.png",
+    },
+    {
+      id: "3",
+      color: "orange",
+      name: "Fish",
+      translatedName: "Deng'gitagita",
+      img: "playing.png",
+    },
+    {
+      id: "4",
+      color: "violet",
+      name: "Cow",
+      translatedName: "Plangoy",
+      img: "swimming.png",
+    },
+    {
+      id: "5",
+      color: "success",
+      name: "Bird",
+      translatedName: "Pha'lalagoy",
+      img: "running.png",
+    },
+  ],
   animals: [
     {
       id: "1",
@@ -29,32 +65,104 @@ const contents = {
       color: "secondary",
       name: "Chicken",
       translatedName: "Manok",
-      img: "chicken.svg",
+      img: "chicken.png",
     },
     {
       id: "3",
       color: "orange",
       name: "Fish",
       translatedName: "S'da",
-      img: "cat.png",
+      img: "fish.png",
     },
     {
       id: "4",
       color: "violet",
       name: "Cow",
       translatedName: "Sap'e",
-      img: "chicken.svg",
+      img: "cow.png",
     },
     {
       id: "5",
       color: "success",
       name: "Bird",
       translatedName: "Papanok",
-      img: "cat.png",
+      img: "bird.png",
     },
   ],
-  colors: [{ id: "1", color: "success", name: "Colors", img: "chicken.svg" }],
-  numbers: [{ id: "1", color: "orange", name: "Numbers", img: "cat.png" }],
+  colors: [
+    {
+      id: "1",
+      color: "danger",
+      name: "Red",
+      translatedName: "mariga",
+      img: "red.png",
+    },
+    {
+      id: "2",
+      color: "secondary",
+      name: "Blue",
+      translatedName: "Biro",
+      img: "blue.png",
+    },
+    {
+      id: "3",
+      color: "orange",
+      name: "Yellow",
+      translatedName: "Binaneng",
+      img: "yellow.png",
+    },
+    {
+      id: "4",
+      color: "success",
+      name: "Purple",
+      translatedName: "Rambayong",
+      img: "purple.png",
+    },
+    {
+      id: "5",
+      color: "white",
+      name: "Black",
+      translatedName: "mait'm",
+      img: "black.png",
+    },
+  ],
+  numbers: [
+    {
+      id: "1",
+      color: "danger",
+      name: "One",
+      translatedName: "Isa",
+      img: "1.png",
+    },
+    {
+      id: "2",
+      color: "secondary",
+      name: "Two",
+      translatedName: "Duwa",
+      img: "2.png",
+    },
+    {
+      id: "3",
+      color: "orange",
+      name: "Three",
+      translatedName: "Tlo",
+      img: "3.png",
+    },
+    {
+      id: "4",
+      color: "success",
+      name: "Four",
+      translatedName: "Pat",
+      img: "4.png",
+    },
+    {
+      id: "5",
+      color: "violet",
+      name: "Five",
+      translatedName: "Lima",
+      img: "5.png",
+    },
+  ],
 };
 
 export default {

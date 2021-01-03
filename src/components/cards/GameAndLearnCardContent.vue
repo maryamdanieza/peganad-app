@@ -13,7 +13,9 @@
       </ion-card-header>
       <div class="img-content">
         <img
-          :src="require(`../../../public/assets/learn-content/${content.img}`)"
+          :src="
+            require(`../../../public/assets/card-content/${routerParam}/${content.img}`)
+          "
         />
       </div>
       <ion-card-header class="ion-no-padding ion-padding-top ion-text-center">
