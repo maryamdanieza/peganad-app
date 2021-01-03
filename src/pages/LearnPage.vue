@@ -3,7 +3,10 @@
     <ion-grid class="learn-header">
       <ion-row>
         <ion-col size="12">
-          <img class="img-header" src="../../public/assets/design/learning.svg" />
+          <img
+            class="img-header"
+            src="../../public/assets/design/learning.svg"
+          />
         </ion-col>
       </ion-row>
     </ion-grid>

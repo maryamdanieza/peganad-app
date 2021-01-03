@@ -6,6 +6,7 @@ http://ionicframework.com/docs/theming/ */
 :root {
   /** padding top for status bar overlay **/
   /* --ion-safe-area-top: 20px; */
+  /* --ion-statusbar-padding: 20px */
 
   /** primary **/
   --ion-color-primary: #3880ff;
