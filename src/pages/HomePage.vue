@@ -86,16 +86,16 @@ ion-card-header {
 }
 
 .learn {
-  background-image: url("../../public/assets/design/learning.svg");
+  background-image: url("../../public/assets/design/study.png");
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 45%;
   background-position: right;
 }
 
 .game {
-  background-image: url("../../public/assets/design/gaming.svg");
+  background-image: url("../../public/assets/design/game.png");
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 45%;
   background-position: right;
 }
 </style>

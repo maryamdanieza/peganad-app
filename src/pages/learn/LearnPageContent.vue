@@ -25,28 +25,28 @@ const contents = {
     },
     {
       id: "2",
-      color: "danger",
+      color: "secondary",
       name: "Chicken",
       translatedName: "Tuturog'n",
       img: "sleeping.png",
     },
     {
       id: "3",
-      color: "orange",
+      color: "secondary",
       name: "Fish",
       translatedName: "Deng'gitagita",
       img: "playing.png",
     },
     {
       id: "4",
-      color: "violet",
+      color: "secondary",
       name: "Cow",
       translatedName: "Plangoy",
       img: "swimming.png",
     },
     {
       id: "5",
-      color: "success",
+      color: "secondary",
       name: "Bird",
       translatedName: "Pha'lalagoy",
       img: "running.png",
@@ -186,3 +186,4 @@ export default {
   },
 };
 </script>
+

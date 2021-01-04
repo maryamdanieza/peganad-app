@@ -3,10 +3,7 @@
     <ion-grid class="learn-header">
       <ion-row>
         <ion-col size="12">
-          <img
-            class="img-header"
-            src="../../public/assets/design/learning.svg"
-          />
+          <img class="img-header" src="../../public/assets/design/study.png" />
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -20,7 +17,11 @@
         <ion-col class="ion-no-padding" size="12">
           <ion-slides pager="true" :options="slideOpts">
             <ion-slide v-for="(card, index) in cards" :key="index">
-              <ion-card :color="card.color" :routerLink="card.link">
+              <ion-card
+                :color="card.color"
+                :routerLink="card.link"
+                @click="cardColor(card.color)"
+              >
                 <ion-card-header class="ion-padding-top">
                   <ion-card-title
                     ><h2>{{ card.title }}</h2></ion-card-title
@@ -56,25 +57,25 @@ const cards = [
   {
     color: "secondary",
     title: "Words",
-    img: "graduate.svg",
+    img: "words.png",
     link: "/learn/words",
   },
   {
     color: "success",
     title: "Animals",
-    img: "learning.svg",
+    img: "animals.png",
     link: "/learn/animals",
   },
   {
-    color: "violet",
+    color: "orange",
     title: "Colors",
-    img: "gaming.svg",
+    img: "colors.png",
     link: "/learn/colors",
   },
   {
-    color: "orange",
+    color: "violet",
     title: "Numbers",
-    img: "game.svg",
+    img: "numbers.png",
     link: "/learn/numbers",
   },
 ];
@@ -100,6 +101,13 @@ export default {
         speed: 400,
       },
     };
+  },
+  methods: {
+    cardColor(cardColor) {
+      const color = cardColor;
+      console.log(color);
+      return color;
+    },
   },
 };
 </script>
