@@ -4,13 +4,10 @@
     toolbarColor=""
     pageDefaultBackLink="/learn"
   >
-    
   </base-layout>
 </template>
 
 <script>
-
-
 const cards = {
   words: [{ id: "1", color: "secondary", name: "Words", img: "graduate.svg" }],
   animals: [

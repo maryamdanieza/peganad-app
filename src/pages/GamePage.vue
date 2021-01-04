@@ -3,7 +3,7 @@
     <ion-grid class="game-header">
       <ion-row>
         <ion-col size="12">
-          <img class="img-header" src="../../public/assets/design/gaming.svg" />
+          <img class="img-header" src="../../public/assets/design/game.png" />
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -53,22 +53,22 @@ const cards = [
   {
     color: "secondary",
     title: "Words",
-    img: "graduate.svg",
+    img: "words.png",
+  },
+  {
+    color: "success",
+    title: "Animals",
+    img: "animals.png",
   },
   {
     color: "danger",
-    title: "Animals",
-    img: "learning.svg",
+    title: "Colors",
+    img: "colors.png",
   },
   {
     color: "violet",
-    title: "Colors",
-    img: "gaming.svg",
-  },
-  {
-    color: "orange",
     title: "Numbers",
-    img: "game.svg",
+    img: "numbers.png",
   },
 ];
 
@@ -108,7 +108,7 @@ ion-grid.game-header {
 
 ion-slides {
   --bullet-background: black;
-  --bullet-background-active: #eb445a;
+  --bullet-background-active: #faa329;
 }
 
 ion-card {
