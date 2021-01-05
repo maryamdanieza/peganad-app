@@ -2,9 +2,12 @@
   <ion-page>
     <ion-header class="ion-no-border">
       <ion-toolbar :color="toolbarColor">
-        <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-          <ion-button>
+        <ion-buttons>
+          <ion-back-button
+            v-if="$route.fullPath != '/home'"
+            slot="start"
+          ></ion-back-button>
+          <ion-button v-else>
             <ion-icon slot="icon-only" :icon="grid"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -24,8 +27,8 @@ import {
   IonToolbar,
   IonHeader,
   IonButtons,
-  IonButton,
   IonBackButton,
+  IonButton,
   IonIcon,
   IonTitle,
   IonContent,
@@ -40,8 +43,8 @@ export default {
     IonToolbar,
     IonHeader,
     IonButtons,
-    IonButton,
     IonBackButton,
+    IonButton,
     IonIcon,
     IonTitle,
     IonContent,
@@ -73,5 +76,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
