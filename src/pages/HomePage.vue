@@ -1,101 +1,44 @@
 <template>
-  <base-layout
-    pageTitle="Meranaw Learning App"
-    toolbarColor=""
-  >
-    <div class="card-container">
-      <div class="card-wrapper">
-        <ion-card
-          v-for="card in cards"
-          :key="card.link"
-          :class="card.class"
-          :color="card.color"
-          button="true"
-          :routerLink="card.link"
-        >
-          <ion-card-header>
-            <ion-card-title>{{ card.title }}</ion-card-title>
-            <ion-card-subtitle class="ion-text-uppercase">{{
-              card.subtitle
-            }}</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
+  <base-layout>
+    <div class="wrapper">
+      <ion-text color="danger">
+        <h1 class="sub-header ion-no-margin ion-padding">
+          Meranaw Learnign App
+        </h1>
+      </ion-text>
+      <div class="sub-content ion-padding">
+        <div>Here</div>
       </div>
     </div>
   </base-layout>
 </template>
 
 <script>
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-} from "@ionic/vue";
+import { IonText } from "@ionic/vue";
 
 export default {
   name: "HomePage",
   components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-  },
-  data() {
-    return {
-      cards: [
-        {
-          class: "learn",
-          color: "danger",
-          link: "/learn",
-          title: "Learn",
-          subtitle: "Learn some words!",
-        },
-        {
-          class: "game",
-          color: "orange",
-          link: "/game",
-          title: "Game",
-          subtitle: "Play some Games!",
-        },
-      ],
-    };
+    IonText,
   },
 };
 </script>
 
 <style scoped>
-ion-card-title {
-  font-size: 3em;
-}
-
-ion-card-header {
-  height: 150px;
-}
-
-.card-container {
+.wrapper {
+  display: flex;
+  flex-flow: column;
   height: 100%;
-  width: 100%;
+}
+.sub-header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+.sub-content {
+  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.card-wrapper {
-  width: 100%;
-}
-
-.learn {
-  background-image: url("../../public/assets/design/study.png");
-  background-repeat: no-repeat;
-  background-size: 45%;
-  background-position: right;
-}
-
-.game {
-  background-image: url("../../public/assets/design/game.png");
-  background-repeat: no-repeat;
-  background-size: 45%;
-  background-position: right;
 }
 </style>

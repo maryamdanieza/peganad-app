@@ -1,14 +1,3 @@
-/** Ion Content Global Style **/
-ion-content {
-  --background: #f5f6f9;
-}
-
-/** Home, Leaderboard and Profile Page Background Image **/
-div.card-container {
-  background-image: url("../../public/assets/design/sarimanokbg.png");
-  height: 100%;
-}
-
 /* New Color */
 /** violet **/
 .ion-color-violet {

@@ -3,15 +3,8 @@
     <ion-header class="ion-no-border">
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
-          <ion-back-button
-            v-if="
-              $route.fullPath != '/tabs/home' &&
-                $route.fullPath != '/tabs/leaderboard' &&
-                $route.fullPath != '/tabs/profile'
-            "
-            :default-href="pageDefaultBackLink"
-          ></ion-back-button>
-          <ion-button v-else>
+          <ion-back-button></ion-back-button>
+          <ion-button>
             <ion-icon slot="icon-only" :icon="grid"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -59,7 +52,26 @@ export default {
       grid,
     };
   },
+  created() {
+    console.log("created");
+  },
+  mounted() {
+    console.log("mounted");
+  },
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter");
+  },
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter");
+  },
+  ionViewWillLeave() {
+    console.log("ionViewWillLeave");
+  },
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave");
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
