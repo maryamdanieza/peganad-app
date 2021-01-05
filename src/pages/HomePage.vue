@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap");
 .wrapper {
   display: flex;
   flex-flow: column;
@@ -36,7 +36,7 @@ export default {
   font-size: 3em;
   display: flex;
   align-items: center;
-  font-family: 'Exo', sans-serif;
+  font-family: "Exo", sans-serif;
   font-weight: bold;
 }
 .sub-content {
