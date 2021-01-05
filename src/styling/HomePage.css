@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap");
+
+ion-card {
+  height: 250px;
+  width: 85vw;
+  margin-bottom: 30px;
+}
+ion-card-header {
+  font-family: "Exo", sans-serif;
+  font-weight: 500;
+}
+ion-card-title {
+  color: rgb(116, 116, 116);
+  font-size: 2.5em;
+}
+ion-card-subtitle {
+  color: rgb(143, 143, 143);
+  font-size: 1.5em;
+}
+ion-button {
+  --background: white;
+  --color: rgb(70, 69, 69);
+  --background-activated: rgb(236, 236, 236);
+}
+
+.wrapper {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+.sub-header {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  font-size: 3em;
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+.sub-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.second-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
