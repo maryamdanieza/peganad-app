@@ -1,7 +1,7 @@
 <template>
   <base-layout>
-    <div class="wrapper">
-      <ion-text color="danger">
+    <div class="wrapper ion-padding">
+      <ion-text color="success">
         <h1 class="sub-header ion-no-margin ion-padding">
           Meranaw Learnign App
         </h1>
@@ -25,6 +25,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap');
 .wrapper {
   display: flex;
   flex-flow: column;
@@ -32,8 +33,11 @@ export default {
 }
 .sub-header {
   height: 100px;
+  font-size: 3em;
   display: flex;
   align-items: center;
+  font-family: 'Exo', sans-serif;
+  font-weight: bold;
 }
 .sub-content {
   flex-grow: 1;
