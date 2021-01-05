@@ -11,6 +11,16 @@ const routes = [
     name: "Home",
     component: HomePage,
   },
+  {
+    path: "/learn",
+    name: "Learn",
+    component: () => import('../pages/LearnPage.vue')
+  },
+  // {
+  //   path: "/game",
+  //   name: "Game",
+  //   component: () => import('../pages/GamePage.vue')
+  // }
 ];
 
 const router = createRouter({
