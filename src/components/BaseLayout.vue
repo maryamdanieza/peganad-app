@@ -4,8 +4,16 @@
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
           <ion-back-button v-if="$route.fullPath != '/home'"></ion-back-button>
-          <ion-button v-else>
-            <ion-icon slot="icon-only" :icon="grid"></ion-icon>
+          <!-- <ion-avatar class="ion-margin-start" v-else>
+            <img src="../../public/assets/design/sarimanok.png"  />
+          </ion-avatar> -->
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon
+              slot="icon-only"
+              :icon="informationCircleOutline"
+            ></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-title>{{ pageTitle }}</ion-title>
@@ -27,10 +35,14 @@ import {
   IonBackButton,
   IonButton,
   IonIcon,
+  // IonAvatar,
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { grid } from "ionicons/icons";
+import { grid, informationCircleOutline } from "ionicons/icons";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 export default {
   name: "BaseLayout",
@@ -43,6 +55,7 @@ export default {
     IonBackButton,
     IonButton,
     IonIcon,
+    // IonAvatar,
     IonTitle,
     IonContent,
   },
@@ -50,13 +63,26 @@ export default {
     return {
       //   icon
       grid,
+      informationCircleOutline,
     };
   },
   created() {
     console.log("created");
+    this.statusBar();
   },
   mounted() {
     console.log("mounted");
+  },
+  unmounted() {
+    console.log("destroyed");
+    this.statusBar();
+  },
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: this.toolbarColor,
+      });
+    },
   },
   ionViewWillEnter() {
     console.log("ionViewWillEnter");

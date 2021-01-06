@@ -1,5 +1,5 @@
 <template>
-  <base-layout toolbarColor="danger">
+  <base-layout toolbarColor="orange">
     <div class="wrapper">
       <div class="sub-header-container ion-padding-top">
         <ion-text>
@@ -8,10 +8,11 @@
           ion-no-margin ion-padding-horizontal 
           animate__animated animate__tada"
           >
-            Ready To Learn?
+            Choose Game
           </h1>
         </ion-text>
       </div>
+
       <div class="sub-content">
         <ion-grid>
           <ion-row>
@@ -46,12 +47,13 @@
 import {
   IonText,
   IonCard,
+  // IonCardHeader,
   IonCardContent,
   IonGrid,
   IonRow,
   IonCol,
 } from "@ionic/vue";
-import { bookOutline } from "ionicons/icons";
+import { gameControllerOutline } from "ionicons/icons";
 
 const cards = [
   {
@@ -73,10 +75,11 @@ const cards = [
 ];
 
 export default {
-  name: "LearnPage",
+  name: "GamePage",
   components: {
     IonText,
     IonCard,
+    // IonCardHeader,
     IonCardContent,
     IonGrid,
     IonRow,
@@ -86,7 +89,7 @@ export default {
     return {
       cards: cards,
       // icons
-      bookOutline,
+      gameControllerOutline,
     };
   },
 };
@@ -106,7 +109,7 @@ ion-grid {
   height: 100%;
 }
 .sub-header-container {
-  background: url("../../public/assets/design/study1.png");
+  background: url("../../public/assets/design/game1.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 250px;

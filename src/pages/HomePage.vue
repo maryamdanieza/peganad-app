@@ -6,7 +6,7 @@
           class="sub-header ion-no-margin ion-padding-horizontal 
           animate__animated animate__bounceInDown"
         >
-          Meranaw Learnign App
+          Meranaw Learning App
         </h1>
       </ion-text>
       <div class="sub-content ion-padding-top">

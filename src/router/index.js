@@ -16,11 +16,11 @@ const routes = [
     name: "Learn",
     component: () => import('../pages/LearnPage.vue')
   },
-  // {
-  //   path: "/game",
-  //   name: "Game",
-  //   component: () => import('../pages/GamePage.vue')
-  // }
+  {
+    path: "/game",
+    name: "Game",
+    component: () => import('../pages/GamePage.vue')
+  }
 ];
 
 const router = createRouter({
