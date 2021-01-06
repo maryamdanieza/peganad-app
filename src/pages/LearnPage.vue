@@ -1,13 +1,17 @@
 <template>
   <base-layout toolbarColor="danger">
     <div class="wrapper">
-      <ion-text>
-        <h1
-          class="sub-header ion-text-center ion-no-margin ion-padding-horizontal"
-        >
-          Ready to Learn?
-        </h1>
-      </ion-text>
+      <div class="sub-header-container ion-padding-top">
+        <ion-text>
+          <h1
+            class="sub-header ion-text-center 
+          ion-no-margin ion-padding-horizontal 
+          animate__animated animate__tada"
+          >
+            Ready To Learn?
+          </h1>
+        </ion-text>
+      </div>
       <div class="sub-content">
         <ion-grid>
           <ion-row>
@@ -17,18 +21,7 @@
               class="ion-no-padding"
               size="6"
             >
-              <ion-card button="true">
-                <ion-card-header class="ion-no-padding">
-                  <ion-button
-                    class="ion-float-end"
-                    color="danger"
-                    size="large"
-                    fill="clear"
-                  >
-                    <ion-icon slot="icon-only" :icon="schoolOutline"></ion-icon>
-                  </ion-button>
-                </ion-card-header>
-
+              <ion-card class="animate__animated animate__pulse" button="true">
                 <ion-card-content>
                   <img
                     :src="require(`../../public/assets/design/${card.img}`)"
@@ -53,15 +46,12 @@
 import {
   IonText,
   IonCard,
-  IonCardHeader,
   IonCardContent,
   IonGrid,
   IonRow,
   IonCol,
-  IonButton,
-  IonIcon,
 } from "@ionic/vue";
-import { schoolOutline } from "ionicons/icons";
+import { bookOutline } from "ionicons/icons";
 
 const cards = [
   {
@@ -87,19 +77,16 @@ export default {
   components: {
     IonText,
     IonCard,
-    IonCardHeader,
     IonCardContent,
     IonGrid,
     IonRow,
     IonCol,
-    IonButton,
-    IonIcon,
   },
   data() {
     return {
       cards: cards,
       // icons
-      schoolOutline,
+      bookOutline,
     };
   },
 };
@@ -118,8 +105,14 @@ ion-grid {
   flex-flow: column;
   height: 100%;
 }
+.sub-header-container {
+  background: url("../../public/assets/design/study1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 250px;
+}
 .sub-header {
-  height: 120px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
