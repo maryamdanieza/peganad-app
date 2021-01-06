@@ -2,11 +2,8 @@
   <ion-page>
     <ion-header class="ion-no-border">
       <ion-toolbar :color="toolbarColor">
-        <ion-buttons>
-          <ion-back-button
-            v-if="$route.fullPath != '/home'"
-            slot="start"
-          ></ion-back-button>
+        <ion-buttons slot="start">
+          <ion-back-button v-if="$route.fullPath != '/home'"></ion-back-button>
           <ion-button v-else>
             <ion-icon slot="icon-only" :icon="grid"></ion-icon>
           </ion-button>
@@ -15,7 +12,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content :color="toolbarColor">
       <slot />
     </ion-content>
   </ion-page>
