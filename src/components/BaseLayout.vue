@@ -16,7 +16,7 @@
             ></ion-icon>
           </ion-button>
         </ion-buttons>
-        <ion-title>{{ pageTitle }}</ion-title>
+        <ion-title class="ion-text-center">{{ pageTitle }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -98,4 +98,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap");
+
+ion-title {
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+</style>
