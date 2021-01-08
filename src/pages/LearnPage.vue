@@ -1,5 +1,5 @@
 <template>
-  <base-layout toolbarColor="danger">
+  <base-layout toolbarColor="danger" statusBarColor="#eb445a">
     <div class="wrapper">
       <div class="sub-header-container ion-padding-top">
         <ion-text>
