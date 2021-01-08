@@ -21,7 +21,11 @@
               class="ion-no-padding"
               size="6"
             >
-              <ion-card class="animate__animated animate__pulse" button="true">
+              <ion-card
+                class="animate__animated animate__pulse"
+                button="true"
+                :routerLink="card.link"
+              >
                 <ion-card-content>
                   <img
                     :src="require(`../../public/assets/design/${card.img}`)"
@@ -57,18 +61,22 @@ const cards = [
   {
     title: "Animals",
     img: "animals.png",
+    link: "/learn/animals",
   },
   {
     title: "Colors",
     img: "colors.png",
+    link: "/learn/colors",
   },
   {
     title: "Numbers",
     img: "numbers.png",
+    link: "/learn/numbers",
   },
   {
     title: "Words",
     img: "words.png",
+    link: "/learn/words",
   },
 ];
 

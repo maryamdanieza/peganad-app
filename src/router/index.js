@@ -14,13 +14,17 @@ const routes = [
   {
     path: "/learn",
     name: "Learn",
-    component: () => import('../pages/LearnPage.vue')
+    component: () => import("../pages/LearnPage.vue"),
+  },
+  {
+    path: "/learn/:id",
+    component: () => import("../pages/learn/LearnPageContent.vue"),
   },
   {
     path: "/game",
     name: "Game",
-    component: () => import('../pages/GamePage.vue')
-  }
+    component: () => import("../pages/GamePage.vue"),
+  },
 ];
 
 const router = createRouter({
