@@ -46,7 +46,7 @@ const { StatusBar } = Plugins;
 
 export default {
   name: "BaseLayout",
-  props: ["pageTitle", "toolbarColor", "pageDefaultBackLink"],
+  props: ["pageTitle", "toolbarColor", "statusBarColor", "pageDefaultBackLink"],
   components: {
     IonPage,
     IonToolbar,
@@ -68,19 +68,18 @@ export default {
   },
   created() {
     console.log("created");
-    this.statusBar();
   },
   mounted() {
     console.log("mounted");
+    this.statusBar();
   },
   unmounted() {
     console.log("destroyed");
-    this.statusBar();
   },
   methods: {
     statusBar() {
       StatusBar.setBackgroundColor({
-        color: this.toolbarColor,
+        color: this.statusBarColor,
       });
     },
   },

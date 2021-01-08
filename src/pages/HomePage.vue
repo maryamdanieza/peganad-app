@@ -67,6 +67,9 @@ import {
   IonIcon,
 } from "@ionic/vue";
 import { arrowForwardOutline } from "ionicons/icons";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 const cards = [
   {
@@ -109,6 +112,16 @@ export default {
       // icon
       arrowForwardOutline,
     };
+  },
+  ionViewWillEnter() {
+    this.statusBar();
+  },
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#f4f5f8",
+      });
+    },
   },
 };
 </script>
