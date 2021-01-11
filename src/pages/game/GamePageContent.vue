@@ -1,58 +1,52 @@
 <template>
   <base-layout
-    :pageTitle="`Learn ${routerParam}`.toUpperCase()"
-    toolbarColor="violet"
-    statusBarColor="#ec29fa"
-    pageDefaultBackLink="/learn"
+    :pageTitle="`Play ${routerParam}`.toUpperCase()"
+    toolbarColor="pink"
+    statusBarColor="#f3128a"
+    pageDefaultBackLink="/game"
     :routerParam="routerParam"
   >
     <div class="wrapper ion-padding">
-      <game-and-learn-card-content
+      <game-card-content
         :contents="contents"
         :routerParam="routerParam"
-        color="pink"
-      >
-      </game-and-learn-card-content>
+        color="violet"
+      ></game-card-content>
     </div>
   </base-layout>
 </template>
 
 <script>
-import GameAndLearnCardContent from "../../components/cards/GameAndLearnCardContent.vue";
+import GameCardContent from "../../components/cards/GameCardContent.vue";
 
 const contents = {
   words: [
     {
       id: "1",
-      color: "secondary",
       name: "Walking",
       translatedName: "P'lalakaw",
       img: "walking.png",
     },
     {
       id: "2",
-      color: "secondary",
       name: "Chicken",
       translatedName: "Tuturog'n",
       img: "sleeping.png",
     },
     {
       id: "3",
-      color: "secondary",
       name: "Fish",
       translatedName: "Deng'gitagita",
       img: "playing.png",
     },
     {
       id: "4",
-      color: "secondary",
       name: "Cow",
       translatedName: "Plangoy",
       img: "swimming.png",
     },
     {
       id: "5",
-      color: "secondary",
       name: "Bird",
       translatedName: "Pha'lalagoy",
       img: "running.png",
@@ -61,35 +55,30 @@ const contents = {
   animals: [
     {
       id: "1",
-      color: "danger",
       name: "Cat",
       translatedName: "B'dung",
       img: "cat.png",
     },
     {
       id: "2",
-      color: "secondary",
       name: "Chicken",
       translatedName: "Manok",
       img: "chicken.png",
     },
     {
       id: "3",
-      color: "orange",
       name: "Fish",
       translatedName: "S'da",
       img: "fish.png",
     },
     {
       id: "4",
-      color: "violet",
       name: "Cow",
       translatedName: "Sap'e",
       img: "cow.png",
     },
     {
       id: "5",
-      color: "success",
       name: "Bird",
       translatedName: "Papanok",
       img: "bird.png",
@@ -98,35 +87,30 @@ const contents = {
   colors: [
     {
       id: "1",
-      color: "danger",
       name: "Red",
       translatedName: "mariga",
       img: "red.png",
     },
     {
       id: "2",
-      color: "secondary",
       name: "Blue",
       translatedName: "Biro",
       img: "blue.png",
     },
     {
       id: "3",
-      color: "orange",
       name: "Yellow",
       translatedName: "Binaneng",
       img: "yellow.png",
     },
     {
       id: "4",
-      color: "success",
       name: "Purple",
       translatedName: "Rambayong",
       img: "purple.png",
     },
     {
       id: "5",
-      color: "white",
       name: "Black",
       translatedName: "mait'm",
       img: "black.png",
@@ -135,46 +119,71 @@ const contents = {
   numbers: [
     {
       id: "1",
-      color: "danger",
       name: "One",
       translatedName: "Isa",
       img: "1.png",
     },
     {
       id: "2",
-      color: "secondary",
       name: "Two",
       translatedName: "Duwa",
       img: "2.png",
     },
     {
       id: "3",
-      color: "orange",
       name: "Three",
       translatedName: "Tlo",
       img: "3.png",
     },
     {
       id: "4",
-      color: "success",
       name: "Four",
       translatedName: "Pat",
       img: "4.png",
     },
     {
       id: "5",
-      color: "violet",
       name: "Five",
       translatedName: "Lima",
       img: "5.png",
+    },
+    {
+      id: "6",
+      name: "Six",
+      translatedName: "N'em",
+      img: "6.png",
+    },
+    {
+      id: "7",
+      name: "Seven",
+      translatedName: "Pito",
+      img: "7.png",
+    },
+    {
+      id: "8",
+      name: "Eight",
+      translatedName: "Walo",
+      img: "8.png",
+    },
+    {
+      id: "9",
+      name: "Nine",
+      translatedName: "S'yam",
+      img: "8.png",
+    },
+    {
+      id: "10",
+      name: "Ten",
+      translatedName: "Sapolo",
+      img: "10.png",
     },
   ],
 };
 
 export default {
-  name: "LearnContentPage",
+  name: "GamePageContent",
   components: {
-    GameAndLearnCardContent,
+    GameCardContent,
   },
   data() {
     return {
@@ -192,3 +201,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  height: 100%;
+}
+</style>

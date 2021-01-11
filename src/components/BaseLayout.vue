@@ -3,16 +3,31 @@
     <ion-header class="ion-no-border">
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
-          <ion-back-button v-if="$route.fullPath != '/home'"></ion-back-button>
+          <ion-back-button
+            v-if="$route.fullPath != '/home'"
+            :default-href="pageDefaultBackLink"
+          ></ion-back-button>
           <!-- <ion-avatar class="ion-margin-start" v-else>
             <img src="../../public/assets/design/sarimanok.png"  />
           </ion-avatar> -->
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button>
+          <ion-button
+            :routerLink="
+              $route.fullPath != `/game/${routerParam}` &&
+              $route.fullPath != `/learn/${routerParam}`
+                ? '/'
+                : '/home'
+            "
+          >
             <ion-icon
               slot="icon-only"
-              :icon="informationCircleOutline"
+              :icon="
+                $route.fullPath != `/game/${routerParam}` &&
+                $route.fullPath != `/learn/${routerParam}`
+                  ? informationCircleOutline
+                  : home
+              "
             ></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -39,14 +54,20 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { grid, informationCircleOutline } from "ionicons/icons";
+import { grid, informationCircleOutline, home } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
 
 export default {
   name: "BaseLayout",
-  props: ["pageTitle", "toolbarColor", "statusBarColor", "pageDefaultBackLink"],
+  props: [
+    "pageTitle",
+    "toolbarColor",
+    "statusBarColor",
+    "pageDefaultBackLink",
+    "routerParam",
+  ],
   components: {
     IonPage,
     IonToolbar,
@@ -64,18 +85,14 @@ export default {
       //   icon
       grid,
       informationCircleOutline,
+      home,
     };
   },
-  created() {
-    console.log("created");
-  },
+  created() {},
   mounted() {
-    console.log("mounted");
     this.statusBar();
   },
-  unmounted() {
-    console.log("destroyed");
-  },
+  unmounted() {},
   methods: {
     statusBar() {
       StatusBar.setBackgroundColor({
@@ -83,18 +100,10 @@ export default {
       });
     },
   },
-  ionViewWillEnter() {
-    console.log("ionViewWillEnter");
-  },
-  ionViewDidEnter() {
-    console.log("ionViewDidEnter");
-  },
-  ionViewWillLeave() {
-    console.log("ionViewWillLeave");
-  },
-  ionViewDidLeave() {
-    console.log("ionViewDidLeave");
-  },
+  ionViewWillEnter() {},
+  ionViewDidEnter() {},
+  ionViewWillLeave() {},
+  ionViewDidLeave() {},
 };
 </script>
 

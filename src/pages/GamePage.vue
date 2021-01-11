@@ -1,5 +1,5 @@
 <template>
-  <base-layout toolbarColor="orange" statusBarColor="#faa329">
+  <base-layout toolbarColor="orange" statusBarColor="#faa329" pageDefaultBackLink="/">
     <div class="wrapper">
       <div class="sub-header-container ion-padding-top">
         <ion-text>
@@ -22,7 +22,11 @@
               class="ion-no-padding"
               size="6"
             >
-              <ion-card class="animate__animated animate__pulse" button="true">
+              <ion-card
+                class="animate__animated animate__pulse"
+                button="true"
+                :routerLink="card.link"
+              >
                 <ion-card-content>
                   <img
                     :src="require(`../../public/assets/design/${card.img}`)"
@@ -59,18 +63,22 @@ const cards = [
   {
     title: "Animals",
     img: "animals.png",
+    link: "/game/animals",
   },
   {
     title: "Colors",
     img: "colors.png",
+    link: "/game/colors",
   },
   {
     title: "Numbers",
     img: "numbers.png",
+    link: "/game/numbers",
   },
   {
     title: "Words",
     img: "words.png",
+    link: "/game/words",
   },
 ];
 

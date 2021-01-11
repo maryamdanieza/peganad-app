@@ -1,5 +1,9 @@
 <template>
-  <base-layout toolbarColor="danger" statusBarColor="#eb445a">
+  <base-layout
+    toolbarColor="danger"
+    statusBarColor="#eb445a"
+    pageDefaultBackLink="/"
+  >
     <div class="wrapper">
       <div class="sub-header-container ion-padding-top">
         <ion-text>
@@ -134,7 +138,6 @@ ion-grid {
   align-items: center;
   justify-content: center;
 }
-
 h1 {
   font-family: "Exo", sans-serif;
   font-weight: 550;

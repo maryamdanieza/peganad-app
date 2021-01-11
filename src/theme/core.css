@@ -33,3 +33,23 @@ ion-card {
   --ion-color-shade: var(--ion-color-pink-shade);
   --ion-color-tint: var(--ion-color-pink-tint);
 }
+
+/** success outline **/
+.ion-color-successoutline {
+  --ion-color-base: var(--ion-color-successoutline);
+  --ion-color-base-rgb: var(--ion-color-successoutline-rgb);
+  --ion-color-contrast: var(--ion-color-successoutline-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-successoutline-contrast-rgb);
+  --ion-color-shade: var(--ion-color-successoutline-shade);
+  --ion-color-tint: var(--ion-color-successoutline-tint);
+}
+
+/** danger outline **/
+.ion-color-dangeroutline {
+  --ion-color-base: var(--ion-color-dangeroutline);
+  --ion-color-base-rgb: var(--ion-color-dangeroutline-rgb);
+  --ion-color-contrast: var(--ion-color-dangeroutline-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-dangeroutline-contrast-rgb);
+  --ion-color-shade: var(--ion-color-dangeroutline-shade);
+  --ion-color-tint: var(--ion-color-dangeroutline-tint);
+}
