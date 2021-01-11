@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import GameCardContent from "../../components/cards/GameCardContent.vue";
+import GameCardContent from "../../components/game/GameCardContent.vue";
 
 const contents = {
   words: [

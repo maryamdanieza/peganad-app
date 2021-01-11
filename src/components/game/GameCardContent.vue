@@ -95,6 +95,7 @@
                     shape="round"
                     expand="full"
                     @click="tapAnswer(index, answer)"
+                    :style="continueAnswer ? 'pointer-events: none;' : ''"
                   >
                     {{ answer }}
                     <ion-icon
@@ -415,4 +416,7 @@ h6 {
 img {
   width: 60%;
 }
+/* .answer-content {
+  pointer-events: none;
+} */
 </style>

@@ -7,18 +7,18 @@
     :routerParam="routerParam"
   >
     <div class="wrapper ion-padding">
-      <game-and-learn-card-content
+      <learn-card-content
         :contents="contents"
         :routerParam="routerParam"
         color="pink"
       >
-      </game-and-learn-card-content>
+      </learn-card-content>
     </div>
   </base-layout>
 </template>
 
 <script>
-import GameAndLearnCardContent from "../../components/cards/GameAndLearnCardContent.vue";
+import LearnCardContent from "../../components/learn/LearnCardContent.vue";
 
 const contents = {
   words: [
@@ -174,7 +174,7 @@ const contents = {
 export default {
   name: "LearnContentPage",
   components: {
-    GameAndLearnCardContent,
+    LearnCardContent,
   },
   data() {
     return {
