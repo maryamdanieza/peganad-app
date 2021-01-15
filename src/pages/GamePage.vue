@@ -1,5 +1,9 @@
 <template>
-  <base-layout toolbarColor="orange" statusBarColor="#faa329" pageDefaultBackLink="/">
+  <base-layout
+    toolbarColor="orange"
+    statusBarColor="#faa329"
+    pageDefaultBackLink="/"
+  >
     <div class="wrapper">
       <div class="sub-header-container ion-padding-top">
         <ion-text>
@@ -99,6 +103,9 @@ export default {
       // icons
       gameControllerOutline,
     };
+  },
+  created() {
+    console.log(this.$store.getters.contents);
   },
 };
 </script>
