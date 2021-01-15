@@ -1,0 +1,48 @@
+ion-button {
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+ion-card-subtitle {
+  font-size: 1.5em;
+  font-family: "Exo", sans-serif;
+  font-weight: normal;
+}
+ion-card-title {
+  font-size: 2.5em;
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+ion-card-header {
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h6 {
+  font-size: 2em;
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+.sub-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+.sub-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-content {
+  display: flex;
+  justify-content: center;
+}
+img {
+  width: 60%;
+}
