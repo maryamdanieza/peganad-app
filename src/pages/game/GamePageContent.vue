@@ -22,6 +22,9 @@
 <script>
 import LoadingScreen from "../../components/LoadingScreen.vue";
 import GameCardContent from "../../components/game/GameCardContent.vue";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 export default {
   name: "GamePageContent",
@@ -35,6 +38,16 @@ export default {
       routerParam: this.$route.params.id,
       isLoading: true,
     };
+  },
+  created() {
+    this.statusBar();
+  },
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#f3128a",
+      });
+    },
   },
 };
 </script>

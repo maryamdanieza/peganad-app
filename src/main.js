@@ -1,6 +1,6 @@
 import { createApp } from "vue";
-import App from "./App.vue";
 import BaseLayout from "./components/BaseLayout.vue";
+import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
@@ -38,5 +38,7 @@ app.component("base-layout", BaseLayout);
 
 router.isReady().then(() => {
   app.mount("#app");
-  defineCustomElements(window);
 });
+
+defineCustomElements(window);
+

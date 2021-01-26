@@ -60,6 +60,9 @@ import {
   IonCol,
 } from "@ionic/vue";
 import { bookOutline } from "ionicons/icons";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 const cards = [
   {
@@ -100,6 +103,13 @@ export default {
       // icons
       bookOutline,
     };
+  },
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#eb445a",
+      });
+    },
   },
 };
 </script>
