@@ -3,7 +3,7 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
-      contents: null,
+      contents: {},
     };
   },
   getters: {
@@ -14,6 +14,7 @@ const store = createStore({
   mutations: {
     contents(state, value) {
       state.contents = value;
+      console.log(state.contents);
     },
   },
   actions: {

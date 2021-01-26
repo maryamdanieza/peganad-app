@@ -62,6 +62,9 @@ import {
   IonCol,
 } from "@ionic/vue";
 import { gameControllerOutline } from "ionicons/icons";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 const cards = [
   {
@@ -105,7 +108,15 @@ export default {
     };
   },
   created() {
+    this.statusBar();
     console.log(this.$store.getters.contents);
+  },
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#faa329",
+      });
+    },
   },
 };
 </script>

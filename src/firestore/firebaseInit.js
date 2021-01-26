@@ -7,16 +7,16 @@ firebase.initializeApp(firebaseConfig);
 require("firebase/auth");
 
 // utils
-const db = firebase.firestore();
+const firestoreDB = firebase.firestore();
 const auth = firebase.auth();
 const firebaseStorage = firebase.storage();
-const dbNetStatus = firebase.database();
+const firebaseDB = firebase.database();
 
-// db collection query
-const animalsQuery = db.collection("animals");
-const colorsQuery = db.collection("colors");
-const numbersQuery = db.collection("numbers");
-const wordsQuery = db.collection("words");
+// cloud firestore db collection query
+const animalsQuery = firestoreDB.collection("animals");
+const colorsQuery = firestoreDB.collection("colors");
+const numbersQuery = firestoreDB.collection("numbers");
+const wordsQuery = firestoreDB.collection("words");
 
 // export utils/refs
 export {
@@ -24,8 +24,8 @@ export {
   colorsQuery,
   wordsQuery,
   numbersQuery,
-  db,
+  firestoreDB,
   auth,
   firebaseStorage,
-  dbNetStatus,
+  firebaseDB,
 };
