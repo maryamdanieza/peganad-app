@@ -17,11 +17,13 @@ import { arrowForwardOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 import {
   animalsQuery,
-  colorsQuery,
-  numbersQuery,
-  wordsQuery,
+  // colorsQuery,
+  // numbersQuery,
+  // wordsQuery,
+  firebaseDB,
 } from "../../firestore/firebaseInit.js";
 import Localbase from "localbase";
+import SliderScreen from "../../components/slider-screen/SliderScreen.vue";
 
 let localDB = new Localbase("db");
 localDB.config.debug = false;
@@ -62,11 +64,13 @@ export default {
     IonCol,
     IonButton,
     IonIcon,
+    SliderScreen,
   },
   data() {
     return {
       cards: cards,
       contents: {},
+      showSlider: false,
       // icon
       arrowForwardOutline,
     };
@@ -119,147 +123,46 @@ export default {
       return toast.present();
     },
 
+    async hideSlider(value) {
+      this.showSlider = await value;
+    },
+
     /** BUSINESS LOGIC **/
-    checkContent() {
-      var now = new Date().getTime();
-      animalsQuery
-        .orderBy("timestamp")
-        .startAt(now)
-        .limitToLast(1)
-        .onSnapshot(function(querySnapshot) {
-          this.contents.animals = [];
-          querySnapshot.forEach(function(doc) {
-            console.log("snapshot added ", doc.data());
-            this.contents.animals.unshift(doc.data());
-            console.log("HELLO!");
-          });
+    async checkContent() {
+      let db = await localDB.collection("contents").get();
+      if (db.length == 0) {
+        this.showSlider = true;
+      } else {
+        console.log("HAVE DB!");
+        let connectedRef = firebaseDB.ref(".info/connected");
+        connectedRef.on("value", (snap) => {
+          if (!snap.val()) {
+            // If Online
+            this.internetStatus = true;
+            console.log("connection: ", snap.val());
+            this.checkNewContentOnline();
+          }
         });
-      this.newContentFromDB();
+        this.showSlider = false;
+      }
     },
-
-    newContentFromDB() {},
-
-    downloadContent(loading) {
-      let arrContent = {};
-      animalsQuery
-        .get()
-        .then((docs) => {
-          arrContent.animals = [];
-          docs.forEach((doc) => {
-            arrContent.animals.push(doc.data());
-          });
-          this.updateContent(arrContent.animals, "animals");
-        })
-        .then(() => {
-          colorsQuery
-            .get()
-            .then((docs) => {
-              arrContent.colors = [];
-              docs.forEach((doc) => {
-                arrContent.colors.push(doc.data());
-              });
-              this.updateContent(arrContent.colors, "colors");
-            })
-            .then(() => {
-              numbersQuery
-                .get()
-                .then((docs) => {
-                  arrContent.numbers = [];
-                  docs.forEach((doc) => {
-                    arrContent.numbers.push(doc.data());
-                  });
-                  this.updateContent(arrContent.numbers, "numbers");
-                })
-                .then(() => {
-                  wordsQuery
-                    .get()
-                    .then((docs) => {
-                      arrContent.words = [];
-                      docs.forEach((doc) => {
-                        arrContent.words.push(doc.data());
-                      });
-                      this.updateContent(arrContent.words, "words");
-                    })
-                    .finally(() => {
-                      loading.dismiss().then(() => this.successToast());
-                    });
-                });
-            });
-        })
-        .catch((err) => {
-          console.log("err.message :>> ", err.message);
+    checkNewContentOnline() {
+      let checkDatabase = async (dbName) => {
+        const db = await localDB
+          .collection("contents")
+          .doc(dbName)
+          .get();
+        return db;
+      };
+      
+      animalsQuery.onSnapshot((snapshot) => {
+        checkDatabase("animals").then((doc) => {
+          if (snapshot.docs.length != doc["animals"].length) {
+            console.log("NEW DATA ARRIVED");
+          } else {
+            console.log("NO NEW DATA!");
+          }
         });
-    },
-
-    updateContent(docData, docName) {
-      let arrContent = docData;
-      let response = [];
-      arrContent.forEach((doc) => {
-        if (doc.img) {
-          this.getBase64FromUrl(doc.img)
-            .then((result) => {
-              response.push(result);
-              let contentIndex = arrContent.findIndex(
-                (content) => content.img === doc.img
-              );
-              arrContent[contentIndex].img = result;
-              if (response.length === arrContent.length) {
-                response = [];
-                if (doc.audio) {
-                  arrContent.forEach((doc) => {
-                    this.getBase64FromUrl(doc.audio)
-                      .then((result) => {
-                        response.push(result);
-                        let contentIndex = arrContent.findIndex(
-                          (content) => content.audio === doc.audio
-                        );
-                        arrContent[contentIndex].audio = result;
-                        if (response.length === arrContent.length) {
-                          this.storeDataToLocalDB(arrContent, docName);
-                        }
-                      })
-                      .catch((err) => console.error(err));
-                  });
-                } else {
-                  this.storeDataToLocalDB(arrContent, docName);
-                }
-              }
-            })
-            .catch((err) => console.error(err));
-        }
-      });
-    },
-
-    storeDataToLocalDB(docData, docName) {
-      console.log(docData, docName);
-      localDB
-        .collection("contents")
-        .add({ [docName]: docData }, docName)
-        .then(() => {});
-      this.$store.dispatch("contents", { [docName]: docData });
-    },
-
-    async getBase64FromUrl(imageUrl) {
-      var res = await fetch(imageUrl);
-      var blob = await res.blob();
-
-      return new Promise((resolve, reject) => {
-        var reader = new FileReader();
-        reader.addEventListener(
-          "load",
-          function() {
-            var base64data = reader.result.substr(
-              reader.result.indexOf(",") + 1
-            );
-            resolve(base64data);
-          },
-          false
-        );
-
-        reader.onerror = () => {
-          return reject(this);
-        };
-        reader.readAsDataURL(blob);
       });
     },
   },

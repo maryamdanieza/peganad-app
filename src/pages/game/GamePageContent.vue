@@ -6,12 +6,8 @@
     pageDefaultBackLink="/game"
     :routerParam="routerParam"
   >
-    <div v-if="false" class="ion-padding">
-      <loading-screen></loading-screen>
-    </div>
-    <div v-else class="wrapper ion-padding">
+    <div class="wrapper ion-padding">
       <game-card-content
-        :contents="contents"
         :routerParam="routerParam"
         color="violet"
       ></game-card-content>
@@ -20,8 +16,7 @@
 </template>
 
 <script>
-import LoadingScreen from "../../components/LoadingScreen.vue";
-import GameCardContent from "../../components/game/GameCardContent.vue";
+import GameCardContent from "../../components/game-card/GameCardContent.vue";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
@@ -29,14 +24,11 @@ const { StatusBar } = Plugins;
 export default {
   name: "GamePageContent",
   components: {
-    LoadingScreen,
     GameCardContent,
   },
   data() {
     return {
-      contents: this.$store.getters.contents,
       routerParam: this.$route.params.id,
-      isLoading: true,
     };
   },
   created() {

@@ -105,6 +105,7 @@ export default {
     };
   },
   methods: {
+    /** UI Logic **/
     statusBar() {
       StatusBar.setBackgroundColor({
         color: "#eb445a",

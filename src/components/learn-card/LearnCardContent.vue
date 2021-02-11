@@ -10,11 +10,7 @@
       </ion-card-title>
     </ion-card-header>
     <div class="img-content">
-      <img
-        :src="
-          require(`../../../public/assets/card-content/${routerParam}/${content.img}`)
-        "
-      />
+      <img :src="`data:image/jpeg;base64,${content.img}`" />
     </div>
     <ion-card-content class="ion-text-center">
       <ion-card-subtitle> `{{ content.translatedName }}` </ion-card-subtitle>
