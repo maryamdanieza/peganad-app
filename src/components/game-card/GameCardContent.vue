@@ -71,7 +71,7 @@
             </ion-card-title>
           </ion-card-header>
           <div class="img-content">
-            <img :src="displayContent.img" />
+            <img :src="`data:image/jpeg;base64,${displayContent.img}`" />
           </div>
           <ion-card-content class="answer-content">
             <ion-grid>

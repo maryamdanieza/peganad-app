@@ -13,9 +13,13 @@ import {
   createAnimation,
 } from "@ionic/vue";
 import { mic, checkmarkOutline, closeOutline } from "ionicons/icons";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 export default {
-  props: ["contents", "routerParam", "color"],
+  props: ["routerParam", "color"],
   components: {
     IonCard,
     IonCardHeader,
@@ -31,6 +35,7 @@ export default {
   },
   data() {
     return {
+      contents: {},
       generateRandomAnswers: [],
       tappedAnswer: false,
       tappedIndex: null,
@@ -52,12 +57,26 @@ export default {
       closeOutline,
     };
   },
-  mounted() {
-    this.displayContentOneByOne();
-    this.generateRandomAnswer();
+  created() {
+    this.fetchContent();
   },
   methods: {
     /** BUSINESS LOGIC **/
+    fetchContent() {
+      localDB
+        .collection("contents")
+        .get()
+        .then((contents) => {
+          contents.forEach((content) => {
+            console.log(content);
+            if (content[this.routerParam]) {
+              this.contents = content;
+              this.displayContentOneByOne();
+              this.generateRandomAnswer()
+            }
+          });
+        });
+    },
     displayContentOneByOne() {
       let routerParam = this.routerParam;
       let extractContent = this.contents[routerParam];

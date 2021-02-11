@@ -7,177 +7,17 @@
     :routerParam="routerParam"
   >
     <div class="wrapper ion-padding">
-      <learn-card-content
-        :contents="contents"
-        :routerParam="routerParam"
-        color="pink"
-      >
+      <learn-card-content :routerParam="routerParam" color="pink">
       </learn-card-content>
     </div>
   </base-layout>
 </template>
 
 <script>
-import LearnCardContent from "../../components/learn/LearnCardContent.vue";
+import LearnCardContent from "../../components/learn-card/LearnCardContent.vue";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
-
-const contents = {
-  words: [
-    {
-      id: "1",
-      color: "secondary",
-      name: "Walking",
-      translatedName: "P'lalakaw",
-      img: "walking.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Chicken",
-      translatedName: "Tuturog'n",
-      img: "sleeping.png",
-    },
-    {
-      id: "3",
-      color: "secondary",
-      name: "Fish",
-      translatedName: "Deng'gitagita",
-      img: "playing.png",
-    },
-    {
-      id: "4",
-      color: "secondary",
-      name: "Cow",
-      translatedName: "Plangoy",
-      img: "swimming.png",
-    },
-    {
-      id: "5",
-      color: "secondary",
-      name: "Bird",
-      translatedName: "Pha'lalagoy",
-      img: "running.png",
-    },
-  ],
-  animals: [
-    {
-      id: "1",
-      color: "danger",
-      name: "Cat",
-      translatedName: "B'dung",
-      img: "cat.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Chicken",
-      translatedName: "Manok",
-      img: "chicken.png",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Fish",
-      translatedName: "S'da",
-      img: "fish.png",
-    },
-    {
-      id: "4",
-      color: "violet",
-      name: "Cow",
-      translatedName: "Sap'e",
-      img: "cow.png",
-    },
-    {
-      id: "5",
-      color: "success",
-      name: "Bird",
-      translatedName: "Papanok",
-      img: "bird.png",
-    },
-  ],
-  colors: [
-    {
-      id: "1",
-      color: "danger",
-      name: "Red",
-      translatedName: "mariga",
-      img: "red.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Blue",
-      translatedName: "Biro",
-      img: "blue.png",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Yellow",
-      translatedName: "Binaneng",
-      img: "yellow.png",
-    },
-    {
-      id: "4",
-      color: "success",
-      name: "Purple",
-      translatedName: "Rambayong",
-      img: "purple.png",
-    },
-    {
-      id: "5",
-      color: "white",
-      name: "Black",
-      translatedName: "mait'm",
-      img: "black.png",
-    },
-  ],
-  numbers: [
-    {
-      id: "1",
-      color: "danger",
-      name: "One",
-      translatedName: "Isa",
-      img: "1.png",
-      audio: "https://evolution.voxeo.com/library/audio/prompts/numbers/1.wav",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Two",
-      translatedName: "Duwa",
-      img: "2.png",
-      audio: "https://evolution.voxeo.com/library/audio/prompts/numbers/2.wav",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Three",
-      translatedName: "Tlo",
-      img: "3.png",
-      audio: "https://evolution.voxeo.com/library/audio/prompts/numbers/3.wav",
-    },
-    {
-      id: "4",
-      color: "success",
-      name: "Four",
-      translatedName: "Pat",
-      img: "4.png",
-      audio: "https://evolution.voxeo.com/library/audio/prompts/numbers/4.wav",
-    },
-    {
-      id: "5",
-      color: "violet",
-      name: "Five",
-      translatedName: "Lima",
-      img: "5.png",
-      audio: "https://evolution.voxeo.com/library/audio/prompts/numbers/5.wav",
-    },
-  ],
-};
 
 export default {
   name: "LearnContentPage",
@@ -186,11 +26,10 @@ export default {
   },
   data() {
     return {
-      contents: contents,
       routerParam: this.$route.params.id,
     };
   },
-   created() {
+  created() {
     this.statusBar();
   },
   methods: {

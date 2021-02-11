@@ -11,9 +11,13 @@ import {
   IonCol,
 } from "@ionic/vue";
 import { volumeHigh, volumeMute } from "ionicons/icons";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 export default {
-  props: ["contents", "routerParam", "color"],
+  props: ["routerParam", "color"],
   components: {
     IonCard,
     IonCardContent,
@@ -28,6 +32,7 @@ export default {
   },
   data() {
     return {
+      contents: {},
       answers: null,
       audioPlaying: false,
       tappedIndex: null,
@@ -36,13 +41,17 @@ export default {
       volumeMute,
     };
   },
+  created() {
+    this.fetchContent();
+  },
   methods: {
-    playAudio(audioFile, index) {
-      if (audioFile) {
+    playAudio(base64string, index) {
+      if (base64string) {
         if (index + 1) {
           this.tappedIndex = index;
           this.audioPlaying = true;
-          const audio = new Audio(audioFile);
+          let audioBase64 = "data:audio/wav;base64," + base64string;
+          const audio = new Audio(audioBase64);
           audio.play();
           audio.onended = () => {
             this.audioPlaying = false;
@@ -50,7 +59,17 @@ export default {
         }
       }
     },
+    fetchContent() {
+      localDB
+        .collection("contents")
+        .get()
+        .then((contents) => {
+          contents.forEach((content) => {
+            if (content[this.routerParam]) {
+              this.contents = content;
+            }
+          });
+        });
+    },
   },
-  created() {},
-  mounted() {},
 };

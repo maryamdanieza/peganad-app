@@ -1,5 +1,5 @@
 <template>
-  <base-layout>
+  <base-layout v-if="!showSlider">
     <div class="wrapper ion-padding">
       <ion-text color="medium">
         <h1
@@ -51,6 +51,7 @@
       </div>
     </div>
   </base-layout>
+  <slider-screen @hide-slider="hideSlider" v-else />
 </template>
 
 <script>
