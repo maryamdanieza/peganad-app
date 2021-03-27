@@ -32,7 +32,7 @@ p {
   line-height: 1.5;
   color: var(--ion-color-step-600, #60646b);
 }
-@import url("https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap");
+
 p b {
   color: var(--ion-text-color, #000000);
 }
