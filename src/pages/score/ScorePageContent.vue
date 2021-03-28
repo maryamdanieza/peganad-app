@@ -1,8 +1,8 @@
 <template>
   <base-layout
-    toolbarColor="orange"
-    statusBarColor="#faa329"
-    pageDefaultBackLink="/"
+    toolbarColor="pink"
+    :statusBarColor="statusBarColor"
+    pageDefaultBackLink="/game"
   >
     <div class="wrapper">
       <div class="sub-header-container ion-padding-top">
@@ -12,38 +12,19 @@
           ion-no-margin ion-padding-horizontal 
           animate__animated animate__tada"
           >
-            Choose Game
+            Scoreboard
           </h1>
         </ion-text>
       </div>
 
       <div class="sub-content">
         <ion-grid>
-          <ion-row>
-            <ion-col
-              v-for="(card, index) in cards"
-              :key="index"
-              class="ion-no-padding"
-              size="6"
-            >
-              <ion-card
-                class="animate__animated animate__pulse"
-                button="true"
-                :routerLink="card.link"
-              >
-                <ion-card-content>
-                  <img
-                    :src="require(`../../public/assets/design/${card.img}`)"
-                  />
-
-                  <ion-text>
-                    <h1 class="ion-padding-top ion-text-center">
-                      {{ card.title }}
-                    </h1>
-                  </ion-text>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
+          <ion-row class="ion-text-center">
+            <ion-col size="12">1st. Maryam</ion-col>
+            <ion-col size="12">2nd. Danieza</ion-col>
+            <ion-col size="12">3rd. Sarip</ion-col>
+            <ion-col size="12">4th. Amenah</ion-col>
+            <ion-col size="12">5th. Solaiman</ion-col>
           </ion-row>
         </ion-grid>
       </div>
@@ -52,68 +33,34 @@
 </template>
 
 <script>
-import {
-  IonText,
-  IonCard,
-  IonCardContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-} from "@ionic/vue";
+import { IonText, IonGrid, IonRow, IonCol } from "@ionic/vue";
 import { gameControllerOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
 
-const cards = [
-  {
-    title: "Animals",
-    img: "animals.png",
-    link: "/game/animals",
-  },
-  {
-    title: "Colors",
-    img: "colors.png",
-    link: "/game/colors",
-  },
-  {
-    title: "Numbers",
-    img: "numbers.png",
-    link: "/game/numbers",
-  },
-  {
-    title: "Words",
-    img: "words.png",
-    link: "/game/words",
-  },
-];
-
 export default {
-  name: "GamePage",
+  name: "ScorePageContent",
   components: {
     IonText,
-    IonCard,
-    // IonCardHeader,
-    IonCardContent,
     IonGrid,
     IonRow,
     IonCol,
   },
   data() {
     return {
-      cards: cards,
       // icons
       gameControllerOutline,
+      statusBarColor: "#f3128a",
     };
   },
   created() {
     this.statusBar();
-    console.log(this.$store.getters.contents);
   },
   methods: {
     statusBar() {
       StatusBar.setBackgroundColor({
-        color: "#faa329",
+        color: this.statusBarColor,
       });
     },
   },
@@ -134,7 +81,7 @@ ion-grid {
   height: 100%;
 }
 .sub-header-container {
-  background: url("../../public/assets/design/game1.png");
+  background: url("../../../public/assets/design/game1.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 250px;
@@ -153,6 +100,10 @@ ion-grid {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0px 50px 0px 50px;
+  font-size: 2em;
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
 }
 
 h1 {
