@@ -7,28 +7,10 @@
             v-if="$route.fullPath != '/home'"
             :default-href="pageDefaultBackLink"
           ></ion-back-button>
-          <!-- <ion-avatar class="ion-margin-start" v-else>
-            <img src="../../public/assets/design/sarimanok.png"  />
-          </ion-avatar> -->
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button
-            :routerLink="
-              $route.fullPath != `/game/${routerParam}` &&
-              $route.fullPath != `/learn/${routerParam}`
-                ? '/'
-                : '/home'
-            "
-          >
-            <ion-icon
-              slot="icon-only"
-              :icon="
-                $route.fullPath != `/game/${routerParam}` &&
-                $route.fullPath != `/learn/${routerParam}`
-                  ? informationCircleOutline
-                  : home
-              "
-            ></ion-icon>
+          <ion-button v-if="$route.fullPath == '/game'" routerLink="/score">
+            <ion-icon slot="icon-only" :icon="trophy"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-title class="ion-text-center">{{ pageTitle }}</ion-title>
@@ -50,11 +32,10 @@ import {
   IonBackButton,
   IonButton,
   IonIcon,
-  // IonAvatar,
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { grid, informationCircleOutline, home } from "ionicons/icons";
+import { grid, trophy } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
@@ -76,7 +57,6 @@ export default {
     IonBackButton,
     IonButton,
     IonIcon,
-    // IonAvatar,
     IonTitle,
     IonContent,
   },
@@ -84,8 +64,7 @@ export default {
     return {
       //   icon
       grid,
-      informationCircleOutline,
-      home,
+      trophy,
     };
   },
   created() {},
