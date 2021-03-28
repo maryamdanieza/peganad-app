@@ -4,22 +4,20 @@
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
           <ion-back-button
-            v-if="
-              $route.fullPath != '/tabs/home' &&
-                $route.fullPath != '/tabs/leaderboard' &&
-                $route.fullPath != '/tabs/profile'
-            "
+            v-if="$route.fullPath != '/home'"
             :default-href="pageDefaultBackLink"
           ></ion-back-button>
-          <ion-button v-else>
-            <ion-icon slot="icon-only" :icon="grid"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button v-if="$route.fullPath == '/game'" routerLink="/score">
+            <ion-icon slot="icon-only" :icon="trophy"></ion-icon>
           </ion-button>
         </ion-buttons>
-        <ion-title>{{ pageTitle }}</ion-title>
+        <ion-title class="ion-text-center">{{ pageTitle }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content :color="toolbarColor">
       <slot />
     </ion-content>
   </ion-page>
@@ -31,24 +29,33 @@ import {
   IonToolbar,
   IonHeader,
   IonButtons,
-  IonButton,
   IonBackButton,
+  IonButton,
   IonIcon,
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { grid } from "ionicons/icons";
+import { grid, trophy } from "ionicons/icons";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 export default {
   name: "BaseLayout",
-  props: ["pageTitle", "toolbarColor", "pageDefaultBackLink"],
+  props: [
+    "pageTitle",
+    "toolbarColor",
+    "statusBarColor",
+    "pageDefaultBackLink",
+    "routerParam",
+  ],
   components: {
     IonPage,
     IonToolbar,
     IonHeader,
     IonButtons,
-    IonButton,
     IonBackButton,
+    IonButton,
     IonIcon,
     IonTitle,
     IonContent,
@@ -57,9 +64,33 @@ export default {
     return {
       //   icon
       grid,
+      trophy,
     };
   },
+  created() {},
+  mounted() {
+    this.statusBar();
+  },
+  unmounted() {},
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: this.statusBarColor,
+      });
+    },
+  },
+  ionViewWillEnter() {},
+  ionViewDidEnter() {},
+  ionViewWillLeave() {},
+  ionViewDidLeave() {},
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap");
+
+ion-title {
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+</style>

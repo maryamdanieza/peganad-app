@@ -1,187 +1,42 @@
 <template>
   <base-layout
-    :pageTitle="`Learn ${routerParam}`"
-    toolbarColor=""
+    :pageTitle="`Learn ${routerParam}`.toUpperCase()"
+    toolbarColor="violet"
+    statusBarColor="#ec29fa"
     pageDefaultBackLink="/learn"
+    :routerParam="routerParam"
   >
-    <game-and-learn-card-content
-      :contents="contents"
-      :routerParam="routerParam"
-    ></game-and-learn-card-content>
+    <div class="wrapper ion-padding">
+      <learn-card-content :routerParam="routerParam" color="pink">
+      </learn-card-content>
+    </div>
   </base-layout>
 </template>
 
 <script>
-import GameAndLearnCardContent from "../../components/cards/GameAndLearnCardContent.vue";
+import LearnCardContent from "../../components/learn-card/LearnCardContent.vue";
+import { Plugins } from "@capacitor/core";
 
-const contents = {
-  words: [
-    {
-      id: "1",
-      color: "secondary",
-      name: "Walking",
-      translatedName: "P'lalakaw",
-      img: "walking.png",
-    },
-    {
-      id: "2",
-      color: "danger",
-      name: "Chicken",
-      translatedName: "Tuturog'n",
-      img: "sleeping.png",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Fish",
-      translatedName: "Deng'gitagita",
-      img: "playing.png",
-    },
-    {
-      id: "4",
-      color: "violet",
-      name: "Cow",
-      translatedName: "Plangoy",
-      img: "swimming.png",
-    },
-    {
-      id: "5",
-      color: "success",
-      name: "Bird",
-      translatedName: "Pha'lalagoy",
-      img: "running.png",
-    },
-  ],
-  animals: [
-    {
-      id: "1",
-      color: "danger",
-      name: "Cat",
-      translatedName: "B'dung",
-      img: "cat.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Chicken",
-      translatedName: "Manok",
-      img: "chicken.png",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Fish",
-      translatedName: "S'da",
-      img: "fish.png",
-    },
-    {
-      id: "4",
-      color: "violet",
-      name: "Cow",
-      translatedName: "Sap'e",
-      img: "cow.png",
-    },
-    {
-      id: "5",
-      color: "success",
-      name: "Bird",
-      translatedName: "Papanok",
-      img: "bird.png",
-    },
-  ],
-  colors: [
-    {
-      id: "1",
-      color: "danger",
-      name: "Red",
-      translatedName: "mariga",
-      img: "red.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Blue",
-      translatedName: "Biro",
-      img: "blue.png",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Yellow",
-      translatedName: "Binaneng",
-      img: "yellow.png",
-    },
-    {
-      id: "4",
-      color: "success",
-      name: "Purple",
-      translatedName: "Rambayong",
-      img: "purple.png",
-    },
-    {
-      id: "5",
-      color: "white",
-      name: "Black",
-      translatedName: "mait'm",
-      img: "black.png",
-    },
-  ],
-  numbers: [
-    {
-      id: "1",
-      color: "danger",
-      name: "One",
-      translatedName: "Isa",
-      img: "1.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Two",
-      translatedName: "Duwa",
-      img: "2.png",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Three",
-      translatedName: "Tlo",
-      img: "3.png",
-    },
-    {
-      id: "4",
-      color: "success",
-      name: "Four",
-      translatedName: "Pat",
-      img: "4.png",
-    },
-    {
-      id: "5",
-      color: "violet",
-      name: "Five",
-      translatedName: "Lima",
-      img: "5.png",
-    },
-  ],
-};
+const { StatusBar } = Plugins;
 
 export default {
   name: "LearnContentPage",
   components: {
-    GameAndLearnCardContent,
+    LearnCardContent,
   },
   data() {
     return {
-      contents: contents,
-      routerParam: "",
+      routerParam: this.$route.params.id,
     };
   },
   created() {
-    this.routerParam = this.$route.params.id;
+    this.statusBar();
   },
   methods: {
-    test() {
-      console.log("hello");
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#ec29fa",
+      });
     },
   },
 };

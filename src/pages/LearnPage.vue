@@ -1,132 +1,156 @@
 <template>
-  <base-layout pageTitle="Learn" toolbarColor="danger" pageDefaultBackLink="/">
-    <ion-grid class="learn-header">
-      <ion-row>
-        <ion-col size="12">
-          <img
-            class="img-header"
-            src="../../public/assets/design/learning.svg"
-          />
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid class="learn-content">
-      <ion-row>
-        <ion-col size="12">
-          <ion-text color="danger">
-            <h4 class="ion-text-center">Course for you</h4>
-          </ion-text>
-        </ion-col>
-        <ion-col class="ion-no-padding" size="12">
-          <ion-slides pager="true" :options="slideOpts">
-            <ion-slide v-for="(card, index) in cards" :key="index">
-              <ion-card :color="card.color" :routerLink="card.link">
-                <ion-card-header class="ion-padding-top">
-                  <ion-card-title
-                    ><h2>{{ card.title }}</h2></ion-card-title
-                  >
-                </ion-card-header>
-                <img
-                  class="img-slides"
-                  :src="require(`../../public/assets/design/${card.img}`)"
-                />
+  <base-layout
+    toolbarColor="danger"
+    statusBarColor="#eb445a"
+    pageDefaultBackLink="/"
+  >
+    <div class="wrapper">
+      <div class="sub-header-container ion-padding-top">
+        <ion-text>
+          <h1
+            class="sub-header ion-text-center 
+          ion-no-margin ion-padding-horizontal 
+          animate__animated animate__tada"
+          >
+            Ready To Learn?
+          </h1>
+        </ion-text>
+      </div>
+      <div class="sub-content">
+        <ion-grid>
+          <ion-row>
+            <ion-col
+              v-for="(card, index) in cards"
+              :key="index"
+              class="ion-no-padding"
+              size="6"
+            >
+              <ion-card
+                class="animate__animated animate__pulse"
+                button="true"
+                :routerLink="card.link"
+              >
+                <ion-card-content>
+                  <img
+                    :src="require(`../../public/assets/design/${card.img}`)"
+                  />
+
+                  <ion-text>
+                    <h1 class="ion-padding-top ion-text-center">
+                      {{ card.title }}
+                    </h1>
+                  </ion-text>
+                </ion-card-content>
               </ion-card>
-            </ion-slide>
-          </ion-slides>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
   </base-layout>
 </template>
 
 <script>
 import {
+  IonText,
+  IonCard,
+  IonCardContent,
   IonGrid,
   IonRow,
   IonCol,
-  IonText,
-  IonSlides,
-  IonSlide,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
 } from "@ionic/vue";
+import { bookOutline } from "ionicons/icons";
+import { Plugins } from "@capacitor/core";
+
+const { StatusBar } = Plugins;
 
 const cards = [
   {
-    color: "secondary",
-    title: "Words",
-    img: "graduate.svg",
-    link: "/learn/words",
-  },
-  {
-    color: "success",
     title: "Animals",
-    img: "learning.svg",
+    img: "animals.png",
     link: "/learn/animals",
   },
   {
-    color: "violet",
     title: "Colors",
-    img: "gaming.svg",
+    img: "colors.png",
     link: "/learn/colors",
   },
   {
-    color: "orange",
     title: "Numbers",
-    img: "game.svg",
+    img: "numbers.png",
     link: "/learn/numbers",
+  },
+  {
+    title: "Words",
+    img: "words.png",
+    link: "/learn/words",
   },
 ];
 
 export default {
   name: "LearnPage",
   components: {
+    IonText,
+    IonCard,
+    IonCardContent,
     IonGrid,
     IonRow,
     IonCol,
-    IonText,
-    IonSlides,
-    IonSlide,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
   },
   data() {
     return {
       cards: cards,
-      slideOpts: {
-        slidesPerView: 2,
-        speed: 400,
-      },
+      // icons
+      bookOutline,
     };
+  },
+  methods: {
+    /** UI Logic **/
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#eb445a",
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
-ion-grid.learn-header {
-  background: #eb445a;
-  border-radius: 0px 0px 30px 30px;
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@400;500&display=swap");
+
+ion-grid {
+  --ion-grid-padding: 10px;
+  --ion-grid-width-xs: 100px;
+}
+
+.wrapper {
   display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+.sub-header-container {
+  background: url("../../public/assets/design/study1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 250px;
+}
+.sub-header {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  font-family: "Exo", sans-serif;
+  font-weight: bold;
+}
+.sub-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
-
-ion-slides {
-  --bullet-background: black;
-  --bullet-background-active: #eb445a;
-}
-
-ion-card {
-  border-radius: 20px 20px 20px 20px;
-  height: 330px;
-}
-
-.img-header {
-  height: 300px;
-}
-
-.img-slides {
-  height: 200px;
+h1 {
+  font-family: "Exo", sans-serif;
+  font-weight: 550;
 }
 </style>

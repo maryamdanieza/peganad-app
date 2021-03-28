@@ -1,12 +1,6 @@
-/** Ion Content Global Style **/
-ion-content {
-  --background: #f5f6f9;
-}
-
-/** Home, Leaderboard and Profile Page Background Image **/
-div.card-container {
-  background-image: url("../../public/assets/design/sarimanokbg.png");
-  height: 100%;
+/* IonCard */
+ion-card {
+  border-radius: 20px 20px 20px 20px;
 }
 
 /* New Color */
@@ -28,4 +22,34 @@ div.card-container {
   --ion-color-contrast-rgb: var(--ion-color-orange-contrast-rgb);
   --ion-color-shade: var(--ion-color-orange-shade);
   --ion-color-tint: var(--ion-color-orange-tint);
+}
+
+/** pink **/
+.ion-color-pink {
+  --ion-color-base: var(--ion-color-pink);
+  --ion-color-base-rgb: var(--ion-color-pink-rgb);
+  --ion-color-contrast: var(--ion-color-pink-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-pink-contrast-rgb);
+  --ion-color-shade: var(--ion-color-pink-shade);
+  --ion-color-tint: var(--ion-color-pink-tint);
+}
+
+/** success outline **/
+.ion-color-successoutline {
+  --ion-color-base: var(--ion-color-successoutline);
+  --ion-color-base-rgb: var(--ion-color-successoutline-rgb);
+  --ion-color-contrast: var(--ion-color-successoutline-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-successoutline-contrast-rgb);
+  --ion-color-shade: var(--ion-color-successoutline-shade);
+  --ion-color-tint: var(--ion-color-successoutline-tint);
+}
+
+/** danger outline **/
+.ion-color-dangeroutline {
+  --ion-color-base: var(--ion-color-dangeroutline);
+  --ion-color-base-rgb: var(--ion-color-dangeroutline-rgb);
+  --ion-color-contrast: var(--ion-color-dangeroutline-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-dangeroutline-contrast-rgb);
+  --ion-color-shade: var(--ion-color-dangeroutline-shade);
+  --ion-color-tint: var(--ion-color-dangeroutline-tint);
 }

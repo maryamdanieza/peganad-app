@@ -1,69 +1,56 @@
 <template>
   <base-layout
-    :pageTitle="`Play  ${'Game'}`"
-    toolbarColor=""
-    pageDefaultBackLink="/learn"
+    :pageTitle="`Play ${routerParam}`.toUpperCase()"
+    toolbarColor="pink"
+    statusBarColor="#f3128a"
+    pageDefaultBackLink="/game"
+    :routerParam="routerParam"
   >
-    
+    <div class="wrapper ion-padding">
+      <game-card-content
+        :routerParam="routerParam"
+        color="violet"
+      ></game-card-content>
+    </div>
   </base-layout>
 </template>
 
 <script>
+import GameCardContent from "../../components/game-card/GameCardContent.vue";
+import { Plugins } from "@capacitor/core";
 
-
-const cards = {
-  words: [{ id: "1", color: "secondary", name: "Words", img: "graduate.svg" }],
-  animals: [
-    {
-      id: "1",
-      color: "danger",
-      name: "Cat",
-      translatedName: "B'dung",
-      img: "cat.png",
-    },
-    {
-      id: "2",
-      color: "secondary",
-      name: "Chicken",
-      translatedName: "Manok",
-      img: "chicken.svg",
-    },
-    {
-      id: "3",
-      color: "orange",
-      name: "Fish",
-      translatedName: "S'da",
-      img: "cat.png",
-    },
-    {
-      id: "4",
-      color: "violet",
-      name: "Cow",
-      translatedName: "Sap'e",
-      img: "chicken.svg",
-    },
-    {
-      id: "5",
-      color: "success",
-      name: "Bird",
-      translatedName: "Papanok",
-      img: "cat.png",
-    },
-  ],
-  colors: [{ id: "1", color: "success", name: "Colors", img: "gaming.svg" }],
-  numbers: [{ id: "1", color: "orange", name: "Numbers", img: "game.svg" }],
-};
+const { StatusBar } = Plugins;
 
 export default {
-  name: "GameContentPage",
+  name: "GamePageContent",
+  components: {
+    GameCardContent,
+  },
   data() {
     return {
-      cards: cards,
-      routerParam: "",
+      routerParam: this.$route.params.id,
     };
   },
   created() {
-    this.routerParam = this.$route.params.id;
+    this.statusBar();
+  },
+  methods: {
+    statusBar() {
+      StatusBar.setBackgroundColor({
+        color: "#f3128a",
+      });
+    },
   },
 };
 </script>
+
+<style scoped>
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  height: 100%;
+}
+</style>

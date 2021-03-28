@@ -95,6 +95,30 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-orange-contrast-rgb: 255, 255, 255;
   --ion-color-orange-shade: #dc8f24;
   --ion-color-orange-tint: #fbac3e;
+
+  /** pink **/
+  --ion-color-pink: #f3128a;
+  --ion-color-pink-rgb: 243, 18, 138;
+  --ion-color-pink-contrast: #ffffff;
+  --ion-color-pink-contrast-rgb: 255, 255, 255;
+  --ion-color-pink-shade: #d61079;
+  --ion-color-pink-tint: #f42a96;
+
+  /** success outline **/
+  --ion-color-successoutline: #ffffff;
+  --ion-color-successoutline-rgb: 255, 255, 255;
+  --ion-color-successoutline-contrast: #2dd36f;
+  --ion-color-successoutline-contrast-rgb: #2dd36f;
+  --ion-color-successoutline-shade: #e0e0e0;
+  --ion-color-successoutline-tint: #ffffff;
+
+  /** danger outline **/
+  --ion-color-dangeroutline: #ffffff;
+  --ion-color-dangeroutline-rgb: 255, 255, 255;
+  --ion-color-dangeroutline-contrast: #eb445a;
+  --ion-color-dangeroutline-contrast-rgb: #eb445a;
+  --ion-color-dangeroutline-shade: #e0e0e0;
+  --ion-color-dangeroutline-tint: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
