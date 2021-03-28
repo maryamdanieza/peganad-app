@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     playAudio(base64string, index) {
+      console.log(base64string);
       if (base64string) {
         if (index + 1) {
           this.tappedIndex = index;
