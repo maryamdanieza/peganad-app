@@ -1,3 +1,4 @@
+import { Media } from "@ionic-native/media";
 import {
   IonCard,
   IonCardHeader,
@@ -72,7 +73,7 @@ export default {
             if (content[this.routerParam]) {
               this.contents = content;
               this.displayContentOneByOne();
-              this.generateRandomAnswer()
+              this.generateRandomAnswer();
             }
           });
         });
@@ -128,18 +129,35 @@ export default {
       }
     },
     checkAnswer() {
+      const playAudio = function(value) {
+        const file = Media.create(
+          `file:///android_asset/public/assets/audio/${value}`
+        );
+        // to listen to plugin events:
+        file.onStatusUpdate.subscribe((status) => console.log(status)); // fires when file status changes
+
+        file.onSuccess.subscribe(() => console.log("Action is successful"));
+
+        file.onError.subscribe((error) => console.log("Error!", error));
+
+        // play the file
+        file.play();
+      };
       if (this.answerSelected == this.correctAnswer) {
         console.log("Correcnt Answer!");
         this.colorTapBtn = "success";
         this.continueAnswer = true;
         this.isAnswerCorrect = true;
         this.score += 10;
+        playAudio("correct-sound.wav");
       } else {
         console.log("Wrong Answer! Correct Answer is: ", this.correctAnswer);
         this.colorCheckBtn = "dangeroutline";
         this.colorTapBtn = "danger";
         this.continueAnswer = true;
         this.isAnswerWrong = true;
+        playAudio("wrong-sound.wav");
+
       }
     },
     continueAnswering() {
