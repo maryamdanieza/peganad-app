@@ -12,7 +12,7 @@
           ion-no-margin ion-padding-horizontal 
           animate__animated animate__tada"
           >
-            Scoreboard
+            Game Best Scores
           </h1>
         </ion-text>
       </div>
@@ -20,20 +20,28 @@
       <div class="sub-content">
         <ion-grid>
           <ion-row class="ion-justify-content-center ion-align-items-center">
-            <template v-for="(player, index) in topFivePlayer" :key="index">
-              <ion-col size="2">{{ player.place }}</ion-col>
-              <ion-col class="ion-no-padding" size="10">
+            <template v-for="(game, index) in gamesBestScore" :key="index">
+              <ion-col class="ion-no-padding" size="12">
                 <ion-card>
                   <ion-card-content>
                     <ion-row
                       class="ion-justify-content-between ion-align-items-center"
                     >
-                      <ion-col class="player-name" size="9">{{
-                        player.name
+                      <ion-col size="3">
+                        <div>
+                          <img
+                            :src="
+                              require(`../../../public/assets/design/${game.img}`)
+                            "
+                          />
+                        </div>
+                      </ion-col>
+                      <ion-col class="game-name ion-text-center" size="7">{{
+                        game.name
                       }}</ion-col>
-                      <ion-col class="player-score ion-text-end" size="3">{{
-                        player.score
-                      }}</ion-col>
+                      <ion-col class="game-score ion-text-end" size="2"
+                        ><span>{{ game.score }}</span></ion-col
+                      >
                     </ion-row>
                   </ion-card-content>
                 </ion-card>
@@ -55,7 +63,7 @@ import {
   IonCard,
   IonCardContent,
 } from "@ionic/vue";
-import { gameControllerOutline } from "ionicons/icons";
+import { gameControllerOutline, trophy } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
@@ -72,40 +80,35 @@ export default {
   },
   data() {
     return {
-      topFivePlayer: [
+      gamesBestScore: [
         {
-          name: "Maryam Daniez",
+          name: "Animals Best Score",
           score: "1000",
           time: "7 Seconds",
-          place: "1st",
+          img: "animals.png",
         },
         {
-          name: "Amenah Solaiman",
+          name: "Colors Best Score",
           score: "800",
           time: "9 seconds",
-          place: "2nd",
+          img: "colors.png",
         },
         {
-          name: "Amenah Solaiman",
+          name: "Numbers Best Score",
           score: "800",
           time: "9 seconds",
-          place: "2nd",
+          img: "numbers.png",
         },
         {
-          name: "Amenah Solaiman",
+          name: "Words Best Score",
           score: "800",
           time: "9 seconds",
-          place: "2nd",
-        },
-        {
-          name: "Amenah Solaiman",
-          score: "800",
-          time: "9 seconds",
-          place: "2nd",
+          img: "words.png",
         },
       ],
       // icons
       gameControllerOutline,
+      trophy,
       statusBarColor: "#f3128a",
     };
   },
@@ -130,12 +133,12 @@ ion-grid {
   --ion-grid-width-xs: 100px;
 }
 
-.player-name {
+.game-name {
   font-size: 15px;
   font-family: "Exo", sans-serif;
 }
 
-.player-score {
+.game-score {
   font-size: 15px;
   font-family: "Exo", sans-serif;
   color: rgb(10, 170, 10);
