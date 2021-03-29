@@ -1,7 +1,7 @@
 <template>
   <ion-content fullscreen class="ion-padding" scroll-y="false">
     <ion-slides>
-      <!-- <ion-slide>
+      <ion-slide>
         <div class="slide">
           <img src="../../../public/assets/design/game.png" />
           <h2>Welcome</h2>
@@ -34,7 +34,7 @@
             app development agility to mobile dev teams.
           </p>
         </div>
-      </ion-slide> -->
+      </ion-slide>
 
       <ion-slide>
         <div class="slide-4">
