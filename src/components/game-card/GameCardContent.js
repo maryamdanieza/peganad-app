@@ -99,6 +99,7 @@ export default {
       };
 
       if (this.contentPosition <= extractContent.length) {
+        extractContent.sort(() => Math.random() - 0.5);
         let transform = paginate(extractContent, this.contentPosition, 1);
         this.displayContents = transform;
         console.log(this.displayContents);
