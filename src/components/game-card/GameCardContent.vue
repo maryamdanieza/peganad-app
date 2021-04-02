@@ -9,7 +9,7 @@
   >
     <ion-text>
       <h6 class="ion-text-center sub-header">
-        What is the meranaw meaning of this animal?
+        What is the meranaw meaning of this {{ $route.params.id }}?
       </h6>
     </ion-text>
     <div class="sub-content">
