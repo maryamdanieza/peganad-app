@@ -19,23 +19,45 @@
         class="ion-margin-vertical"
       >
         <ion-card-subtitle color="medium">
-          <ion-grid class="ion-padding">
+          <ion-grid class="">
             <ion-row class="ion-justify-content-between">
-              <div>
-                <span>{{ contentPosition }}/</span
-                ><span>{{ contents[routerParam].length }}</span>
-              </div>
-              <div>
-                Score: <span v-if="score == 0">{{ score }}</span>
-                <span
-                  v-else
-                  :class="
-                    isAnswerCorrect ? 'animate__animated animate__fadeIn' : ''
-                  "
-                  style="color: #2dd36f; font-weight: bold;"
-                  >{{ score }}</span
-                >
-              </div>
+              <ion-col size="4">
+                <div class="ion-text-center">
+                  <span style="font-size: 15px">
+                    Question
+                  </span>
+                  <div>
+                    <span>{{ contentPosition }}/</span
+                    ><span>{{ contents[routerParam].length }}</span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="4">
+                <div class="ion-text-center">
+                  <span style="font-size: 15px">
+                    Time
+                  </span>
+                  <div>:10</div>
+                </div>
+              </ion-col>
+              <ion-col size="4">
+                <div class="ion-text-center">
+                  <span style="font-size: 15px">Score</span>
+                  <div>
+                    <span v-if="score == 0">{{ score }}</span>
+                    <span
+                      v-else
+                      :class="
+                        isAnswerCorrect
+                          ? 'animate__animated animate__fadeIn'
+                          : ''
+                      "
+                      style="color: #2dd36f; font-weight: bold;"
+                      >{{ score }}</span
+                    >
+                  </div>
+                </div>
+              </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-subtitle>
@@ -131,8 +153,11 @@
   >
     <ion-card class="ion-margin-bottom">
       <ion-card-content class="ion-text-center">
+        <ion-card-subtitle class="ion-text-capitalize" color="pink">
+          Personal Best!
+        </ion-card-subtitle>
         <ion-card-title class="ion-text-uppercase" :color="color"
-          >Score: {{ score }}!</ion-card-title
+          >Score: {{ score }}</ion-card-title
         >
         <ion-card-subtitle class="ion-text-capitalize">
           Words you got right: {{ score / 10 }} /
