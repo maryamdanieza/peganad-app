@@ -33,7 +33,7 @@ const { StatusBar } = Plugins;
 const cards = [
   {
     title: "Learn",
-    subtitle: "Card Subtitle",
+    subtitle: "Maganad tano!",
     color: "danger",
     img: "study.png",
     route: "/learn",
@@ -42,7 +42,7 @@ const cards = [
   },
   {
     title: "Game",
-    subtitle: "Card Subtitle",
+    subtitle: "Gitagita tano!",
     color: "orange",
     img: "game.png",
     route: "/game",
@@ -75,16 +75,19 @@ export default {
       arrowForwardOutline,
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.statusBar();
+  },
+  created() {
     this.checkContent();
   },
   methods: {
     /** UI Logic **/
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: "#f4f5f8",
       });
+      return statusBar;
     },
 
     async presentDownloadConfirm() {
@@ -154,7 +157,7 @@ export default {
           .get();
         return db;
       };
-      
+
       animalsQuery.onSnapshot((snapshot) => {
         checkDatabase("animals").then((doc) => {
           if (snapshot.docs.length != doc["animals"].length) {
