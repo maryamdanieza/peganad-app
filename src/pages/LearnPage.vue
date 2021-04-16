@@ -104,12 +104,16 @@ export default {
       bookOutline,
     };
   },
+  ionViewWillEnter() {
+    this.statusBar();
+  },
   methods: {
     /** UI Logic **/
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: "#eb445a",
       });
+      return statusBar;
     },
   },
 };
