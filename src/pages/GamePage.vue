@@ -32,6 +32,15 @@
                 :routerLink="card.link"
               >
                 <ion-card-content>
+                  <div class="ion-text-center">
+                    <ion-button
+                      color="success"
+                      size="small"
+                      fill="solid"
+                      @click.prevent.stop="downloadContent(card.title)"
+                      >New Data!</ion-button
+                    >
+                  </div>
                   <img
                     :src="require(`../../public/assets/design/${card.img}`)"
                   />
@@ -59,6 +68,7 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonButton,
 } from "@ionic/vue";
 import { gameControllerOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
@@ -98,6 +108,7 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
+    IonButton,
   },
   data() {
     return {
@@ -106,15 +117,18 @@ export default {
       gameControllerOutline,
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.statusBar();
-    console.log(this.$store.getters.contents);
   },
   methods: {
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: "#faa329",
       });
+      return statusBar;
+    },
+    downloadContent(title) {
+      console.log("Notify", title.toLowerCase());
     },
   },
 };

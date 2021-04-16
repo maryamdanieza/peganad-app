@@ -65,6 +65,10 @@ import {
 } from "@ionic/vue";
 import { gameControllerOutline, trophy } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 const { StatusBar } = Plugins;
 
@@ -83,26 +87,22 @@ export default {
       gamesBestScore: [
         {
           name: "Animals Best Score",
-          score: "1000",
-          time: "7 Seconds",
+          score: "0",
           img: "animals.png",
         },
         {
           name: "Colors Best Score",
-          score: "800",
-          time: "9 seconds",
+          score: "0",
           img: "colors.png",
         },
         {
           name: "Numbers Best Score",
-          score: "800",
-          time: "9 seconds",
+          score: "0",
           img: "numbers.png",
         },
         {
           name: "Words Best Score",
-          score: "800",
-          time: "9 seconds",
+          score: "0",
           img: "words.png",
         },
       ],
@@ -112,14 +112,30 @@ export default {
       statusBarColor: "#f3128a",
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.statusBar();
   },
+  created() {
+    this.getScore();
+  },
   methods: {
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    // Business Login
+    getScore() {
+      localDB
+        .collection("score")
+        .get()
+        .then((res) => {
+          res.forEach((r, i) => {
+            this.gamesBestScore[i].score = r.score;
+          });
+        });
+    },
+    // UI Logic
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: this.statusBarColor,
       });
+      return statusBar;
     },
   },
 };

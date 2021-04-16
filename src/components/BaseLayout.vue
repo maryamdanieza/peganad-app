@@ -4,7 +4,7 @@
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
           <ion-back-button
-            v-if="$route.fullPath != '/home'"
+            v-if="$route.fullPath != '/home' && $route.fullPath != '/game'"
             :default-href="pageDefaultBackLink"
           ></ion-back-button>
         </ion-buttons>
@@ -12,6 +12,11 @@
           <ion-button v-if="$route.fullPath == '/game'" routerLink="/score">
             <ion-icon slot="icon-only" :icon="trophy"></ion-icon>
           </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+        <ion-button v-if="$route.fullPath == '/game'" routerLink="/">
+          <ion-icon slot="icon-only" :icon="arrowBackOutline"></ion-icon>
+        </ion-button>
         </ion-buttons>
         <ion-title class="ion-text-center">{{ pageTitle }}</ion-title>
       </ion-toolbar>
@@ -35,7 +40,7 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { grid, trophy } from "ionicons/icons";
+import { grid, trophy, arrowBackOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
@@ -65,6 +70,7 @@ export default {
       //   icon
       grid,
       trophy,
+      arrowBackOutline,
     };
   },
   created() {},
@@ -73,16 +79,13 @@ export default {
   },
   unmounted() {},
   methods: {
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: this.statusBarColor,
       });
+      return statusBar;
     },
   },
-  ionViewWillEnter() {},
-  ionViewDidEnter() {},
-  ionViewWillLeave() {},
-  ionViewDidLeave() {},
 };
 </script>
 
