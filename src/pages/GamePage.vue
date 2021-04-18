@@ -34,6 +34,7 @@
                 <ion-card-content>
                   <div class="ion-text-center">
                     <ion-button
+                      v-if="card.hasNewData"
                       color="success"
                       size="small"
                       fill="solid"
@@ -72,6 +73,16 @@ import {
 } from "@ionic/vue";
 import { gameControllerOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
+import {
+  animalsQuery,
+  colorsQuery,
+  wordsQuery,
+  numbersQuery,
+} from "../firestore/firebaseInit.js";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 const { StatusBar } = Plugins;
 
@@ -80,21 +91,25 @@ const cards = [
     title: "Animals",
     img: "animals.png",
     link: "/game/animals",
+    hasNewData: false,
   },
   {
     title: "Colors",
     img: "colors.png",
     link: "/game/colors",
+    hasNewData: false,
   },
   {
     title: "Numbers",
     img: "numbers.png",
     link: "/game/numbers",
+    hasNewData: false,
   },
   {
     title: "Words",
     img: "words.png",
     link: "/game/words",
+    hasNewData: false,
   },
 ];
 
@@ -120,12 +135,78 @@ export default {
   ionViewWillEnter() {
     this.statusBar();
   },
+  created() {
+    this.checkNewContentOnline();
+  },
   methods: {
     async statusBar() {
       const statusBar = await StatusBar.setBackgroundColor({
         color: "#faa329",
       });
       return statusBar;
+    },
+    async checkNewContentOnline() {
+      let checkDatabase = async (dbName) => {
+        const db = await localDB
+          .collection("contents")
+          .doc(dbName)
+          .get();
+        return db;
+      };
+      await Promise.all([
+        (async () => {
+          animalsQuery.onSnapshot((snapshot) => {
+            checkDatabase("animals").then((doc) => {
+              if (snapshot.docs.length != doc["animals"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[0].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[0].hasNewData = false;
+              }
+            });
+          });
+        })(),
+        (async () => {
+          colorsQuery.onSnapshot((snapshot) => {
+            checkDatabase("colors").then((doc) => {
+              if (snapshot.docs.length != doc["colors"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[1].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[1].hasNewData = false;
+              }
+            });
+          });
+        })(),
+        (async () => {
+          numbersQuery.onSnapshot((snapshot) => {
+            checkDatabase("numbers").then((doc) => {
+              if (snapshot.docs.length != doc["numbers"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[2].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[2].hasNewData = false;
+              }
+            });
+          });
+        })(),
+        (async () => {
+          wordsQuery.onSnapshot((snapshot) => {
+            checkDatabase("words").then((doc) => {
+              if (snapshot.docs.length != doc["words"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[3].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[3].hasNewData = false;
+              }
+            });
+          });
+        })(),
+      ]);
     },
     downloadContent(title) {
       console.log("Notify", title.toLowerCase());
