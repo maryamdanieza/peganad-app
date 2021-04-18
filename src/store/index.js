@@ -3,23 +3,23 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
-      contents: {},
+      isHide: true,
     };
   },
   getters: {
-    contents(state) {
-      return state.contents;
+    isHide(state) {
+      return state.isHide;
     },
   },
   mutations: {
-    contents(state, value) {
-      state.contents = value;
-      console.log(state.contents);
+    isHide(state, value) {
+      state.isHide = value;
+      console.log(state.isHide);
     },
   },
   actions: {
-    contents(context, value) {
-      context.commit("contents", value);
+    isHide(context, value) {
+      context.commit("isHide", value);
     },
   },
 });
