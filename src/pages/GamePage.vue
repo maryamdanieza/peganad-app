@@ -78,6 +78,7 @@ import {
   colorsQuery,
   wordsQuery,
   numbersQuery,
+  firebaseDB,
 } from "../firestore/firebaseInit.js";
 import Localbase from "localbase";
 
@@ -136,7 +137,7 @@ export default {
     this.statusBar();
   },
   created() {
-    this.checkNewContentOnline();
+    this.checkNetworkStatusChange();
   },
   methods: {
     async statusBar() {
@@ -144,6 +145,21 @@ export default {
         color: "#faa329",
       });
       return statusBar;
+    },
+    async checkNetworkStatusChange() {
+      let connectedRef = firebaseDB.ref(".info/connected");
+      connectedRef.on("value", (snap) => {
+        if (snap.val() == true) {
+          // If Online
+          console.log("Here!");
+          this.checkNewContentOnline();
+        } else if (snap.val() == false) {
+          this.cards[0].hasNewData = false;
+          this.cards[1].hasNewData = false;
+          this.cards[2].hasNewData = false;
+          this.cards[3].hasNewData = false;
+        }
+      });
     },
     async checkNewContentOnline() {
       let checkDatabase = async (dbName) => {
