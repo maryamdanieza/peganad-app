@@ -147,8 +147,7 @@ export default {
         this.isAnswerCorrect = true;
         this.score += 10 * this.gameTimer;
         this.answerCounter += 1;
-        this.playSound("correct-sound.wav").then((audio) => {
-          audio.load();
+        this.playSound("correct").then((audio) => {
           audio.play();
         });
         this.timer("", "pause", "");
@@ -157,8 +156,7 @@ export default {
         this.colorTapBtn = "danger";
         this.continueAnswer = true;
         this.isAnswerWrong = true;
-        this.playSound("wrong-sound.wav").then((audio) => {
-          audio.load();
+        this.playSound("wrong").then((audio) => {
           audio.play();
         });
         this.timer("", "pause", "");
@@ -263,9 +261,8 @@ export default {
           }
         });
     },
-    async playSound(audioName) {
-      var audioBase64 = require(`../../../public/assets/audio/${audioName}`);
-      const audio = new Audio(audioBase64);
+    async playSound(id) {
+      const audio = document.getElementById(id);
       return audio;
     },
     timer(start, pause, restart) {
@@ -277,8 +274,7 @@ export default {
             countDownTimer();
           }, self.delay);
           if (self.gameTimer == 4) {
-            self.playSound("countdown.wav").then((audio) => {
-              audio.load();
+            self.playSound("countdown").then((audio) => {
               audio.play();
             });
           }
@@ -289,8 +285,7 @@ export default {
           self.isAnswerWrong = true;
           self.colorCheckBtn = "dangeroutline";
           self.colorTapBtn = "danger";
-          self.playSound("wrong-sound.wav").then((audio) => {
-            audio.load();
+          self.playSound("wrong").then((audio) => {
             audio.play();
           });
         }
@@ -300,8 +295,7 @@ export default {
         countDownTimer();
       } else if (pause == "pause") {
         clearTimeout(self.currentTimer);
-        self.playSound("countdown.wav").then((audio) => {
-          audio.load();
+        self.playSound("countdown").then((audio) => {
           audio.currentTime = 0;
           audio.pause();
         });

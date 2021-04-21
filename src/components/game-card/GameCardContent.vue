@@ -197,6 +197,18 @@
       >
     </div>
   </div>
+  <audio id="correct" preload="none">
+    <source
+      src="../../../public/assets/audio/correct-sound.wav"
+      type="audio/wav"
+    />
+  </audio>
+  <audio id="wrong" preload="none">
+    <source src="../../../public/assets/audio/wrong-sound.wav" type="audio/wav" />
+  </audio>
+  <audio id="countdown" preload="none">
+    <source src="../../../public/assets/audio/countdown.wav" type="audio/wav" />
+  </audio>
 </template>
 
 <script>
