@@ -3,11 +3,13 @@
     <ion-slides>
       <ion-slide>
         <div class="slide">
-          <img src="../../../public/assets/design/game.png" />
-          <h2>Welcome</h2>
+          <img src="../../../public/assets/design/numbers.png" />
+          <h1 class="slide1-text">Peganad App</h1>
           <p>
-            The <b>ionic conference app</b> is a practical preview of the ionic
-            framework in action, and a demonstration of proper code use.
+            The <b>Pegenad App</b> is lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Reiciendis ipsum eaque laudantium consequuntur
+            eius? Repudiandae facere numquam suscipit eaque sit cumque odio
+            rerum officia, incidunt, non tempore, sed recusandae. Iste.
           </p>
         </div>
       </ion-slide>
@@ -15,23 +17,25 @@
       <ion-slide>
         <div class="slide">
           <img src="../../../public/assets/design/study.png" />
-          <h2>What is Ionic?</h2>
+          <h1 class="slide2-text">Learn</h1>
           <p>
-            <b>Ionic Framework</b> is an open source SDK that enables developers
-            to build high quality mobile apps with web technologies like HTML,
-            CSS, and JavaScript.
+            <b>Learning</b> is lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Reiciendis ipsum eaque laudantium consequuntur
+            eius? Repudiandae facere numquam suscipit eaque sit cumque odio
+            rerum officia, incidunt, non tempore, sed recusandae. Iste.
           </p>
         </div>
       </ion-slide>
 
       <ion-slide>
         <div class="slide">
-          <img src="../../../public/assets/design/colors.png" />
-          <h2>What is Ionic Appflow?</h2>
+          <img src="../../../public/assets/design/game.png" />
+          <h1 class="slide3-text">Play</h1>
           <p>
-            <b>Ionic Appflow</b> is a powerful set of services and features
-            built on top of Ionic Framework that brings a totally new level of
-            app development agility to mobile dev teams.
+            <b>Playing</b> is lorem ipsum dolor sit amet consectetur adipisicing
+            elit. Reiciendis ipsum eaque laudantium consequuntur eius?
+            Repudiandae facere numquam suscipit eaque sit cumque odio rerum
+            officia, incidunt, non tempore, sed recusandae. Iste.
           </p>
         </div>
       </ion-slide>
@@ -46,7 +50,7 @@
           </div>
           <div v-if="!internetStatus">
             <img src="../../../public/assets/design/congrats.png" />
-            <h2>Download Contents</h2>
+            <h1 class="slide4-text">Download Contents</h1>
             <ion-button
               @click="downloadContent()"
               :disabled="internetStatus"
