@@ -25,8 +25,9 @@ class DownloadContent {
     }
   }
 
-  async downloadContent(value) {
+  async downloadContent() {
     let contentObj = {};
+    counter = 0;
     await Promise.all([
       (async () => {
         let animals = await contentService.getAnimals();
@@ -47,9 +48,10 @@ class DownloadContent {
         let words = await contentService.getWords();
         contentObj.words = words;
         await this.updateContent(contentObj.words, "words");
-      })(),
+      })().catch((err) => {
+        console.log(err);
+      }),
     ]);
-    return value;
   }
 
   async updateContent(docData, docName) {
@@ -88,17 +90,33 @@ class DownloadContent {
                   }
                 }
               })
-              .catch((err) => console.error(err));
+              .catch((err) => {
+                arrContent = [];
+                response = [];
+                console.error(err);
+              });
           }
         });
-      })(),
+      })().catch((err) => {
+        arrContent = [];
+        response = [];
+        console.log(err);
+      }),
     ]);
   }
 
   async storeDataToLocalDB(docData, docName) {
-    await localDB.collection("contents").add({ [docName]: docData }, docName);
-    counter++;
-    if (counter == 4) {
+    await localDB
+      .collection("contents")
+      .add({ [docName]: docData }, docName)
+      .then(() => {
+        counter++;
+        console.log(counter);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    if (counter >= 4) {
       store.dispatch("isHide", false);
       return false;
     }

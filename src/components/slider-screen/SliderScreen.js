@@ -10,6 +10,10 @@ import {
 import { downloadOutline } from "ionicons/icons";
 import { firebaseDB } from "../../firestore/firebaseInit.js";
 import downloadContent from "../../services/download-content.service.js";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 export default {
   components: {
@@ -26,7 +30,7 @@ export default {
       internetStatus: false,
       counter: 0,
       loading: "",
-
+      currentTimer: 0,
       // icons
       downloadOutline,
     };
@@ -35,9 +39,12 @@ export default {
     this.checkNetworkStatusChange();
   },
   watch: {
+    // to hide slider when successfully downloaded the content!
     isHide: function(val) {
       this.$emit("hide-slider", val);
-      this.loading.dismiss();
+      this.loading.dismiss().then(() => {
+        clearTimeout(this.currentTimer);
+      });
     },
   },
   computed: {
@@ -101,6 +108,15 @@ export default {
       this.loading = loading;
       await loading.present();
       downloadContent.downloadContent();
+      this.currentTimer = setTimeout(() => {
+        localDB
+          .collection("contents")
+          .delete()
+          .then(async () => {
+            await loading.dismiss();
+            this.popupToast("Network Interrupted!", "danger", 5000, "bottom");
+          });
+      }, 300000);
     },
   },
 };
