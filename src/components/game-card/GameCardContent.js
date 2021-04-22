@@ -294,13 +294,13 @@ export default {
       if (start == "start") {
         countDownTimer();
       } else if (pause == "pause") {
-        clearTimeout(self.currentTimer);
-        self.playSound("countdown").then((audio) => {
+        clearTimeout(this.currentTimer);
+        this.playSound("countdown").then((audio) => {
           audio.currentTime = 0;
           audio.pause();
         });
       } else if (restart == "restart") {
-        self.gameTimer = 10;
+        this.gameTimer = 10;
       }
     },
     /** UI LOGIC **/
@@ -310,11 +310,18 @@ export default {
       this.answerCounter = 0;
       this.score = 0;
       this.gameTimer = 10;
+      clearTimeout(this.currentTimer);
       this.fetchContent();
     },
     exitQuiz() {
-      this.$router.push("/game");
-      this.showGameContent = true;
+      this.$router.push("/game").then(() => {
+        this.showGameContent = true;
+        this.contentPosition = 1;
+        this.answerCounter = 0;
+        this.score = 0;
+        this.gameTimer = 10;
+        clearTimeout(this.currentTimer);
+      });
     },
     slideAnimation(
       element,
