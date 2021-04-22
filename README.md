@@ -18,7 +18,7 @@ sudo npm install -g @ionic/cli (Linux)
 
 ## Install the dependencies
 ```bash
-Open the folder of the project then type npm install
+Open the root folder of the project then type npm install
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
