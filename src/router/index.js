@@ -26,6 +26,7 @@ const routes = [
   },
   {
     path: "/game/:id",
+    name: "Playing",
     component: () => import("../pages/game/GamePageContent.vue"),
   },
   {
