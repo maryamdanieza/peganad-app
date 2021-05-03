@@ -31,17 +31,19 @@
                 button="true"
                 :routerLink="card.link"
               >
+                <div class="ion-text-center ion-padding-top">
+                  <ion-button
+                    v-if="card.hasNewData"
+                    color="success"
+                    size="small"
+                    fill="solid"
+                    @click.prevent.stop="downloadContent(card.title)"
+                  >
+                    <ion-icon slot="start" :icon="downloadOutline"></ion-icon>
+                    New content!</ion-button
+                  >
+                </div>
                 <ion-card-content>
-                  <div class="ion-text-center">
-                    <ion-button
-                      v-if="card.hasNewData"
-                      color="success"
-                      size="small"
-                      fill="solid"
-                      @click.prevent.stop="downloadContent(card.title)"
-                      >New Data!</ion-button
-                    >
-                  </div>
                   <img
                     :src="require(`../../public/assets/design/${card.img}`)"
                   />
@@ -62,6 +64,7 @@
 </template>
 
 <script>
+import downloadContent from "../services/download-content.service.js";
 import {
   IonText,
   IonCard,
@@ -70,8 +73,11 @@ import {
   IonRow,
   IonCol,
   IonButton,
+  IonIcon,
+  loadingController,
+  toastController,
 } from "@ionic/vue";
-import { gameControllerOutline } from "ionicons/icons";
+import { gameControllerOutline, downloadOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 import {
   animalsQuery,
@@ -125,12 +131,15 @@ export default {
     IonRow,
     IonCol,
     IonButton,
+    IonIcon,
   },
   data() {
     return {
       cards: cards,
+      loading: "",
       // icons
       gameControllerOutline,
+      downloadOutline,
     };
   },
   ionViewWillEnter() {
@@ -139,6 +148,34 @@ export default {
   created() {
     this.checkNetworkStatusChange();
   },
+  watch: {
+    // to hide slider when successfully downloaded the content!
+    isHide: function(val) {
+      console.log("here!", val);
+      this.loading.dismiss().then(() => {
+        clearTimeout(this.currentTimer);
+        if (val == 0) {
+          this.cards[0].hasNewData = false;
+        } else if (val == 1) {
+          this.cards[1].hasNewData = false;
+        } else if (val == 2) {
+          this.cards[2].hasNewData = false;
+        } else if (val == 3) {
+          this.cards[3].hasNewData = false;
+        }
+      });
+    },
+  },
+  computed: {
+    isHide: {
+      get() {
+        return this.$store.state.isHide;
+      },
+      set(val) {
+        this.$store.commit("isHide", val);
+      },
+    },
+  },
   methods: {
     async statusBar() {
       const statusBar = await StatusBar.setBackgroundColor({
@@ -146,12 +183,28 @@ export default {
       });
       return statusBar;
     },
+    async presentLoading() {
+      const loading = await loadingController.create({
+        message: "Downloading please wait...",
+      });
+      this.loading = loading;
+      return loading;
+    },
+    async popupToast(message, color, duration, position) {
+      console.log(message, color, duration, position);
+      const toast = await toastController.create({
+        message: message,
+        color: color,
+        duration: duration,
+        position: position,
+      });
+      return toast.present();
+    },
     async checkNetworkStatusChange() {
       let connectedRef = firebaseDB.ref(".info/connected");
       connectedRef.on("value", (snap) => {
         if (snap.val() == true) {
           // If Online
-          console.log("Here!");
           this.checkNewContentOnline();
         } else if (snap.val() == false) {
           this.cards[0].hasNewData = false;
@@ -224,8 +277,11 @@ export default {
         })(),
       ]);
     },
-    downloadContent(title) {
-      console.log("Notify", title.toLowerCase());
+    async downloadContent(title) {
+      const loading = await this.presentLoading();
+      this.loading = loading;
+      await loading.present();
+      downloadContent.downloadContentByName(title.toLowerCase());
     },
   },
 };
