@@ -4,23 +4,26 @@ const store = createStore({
   state() {
     return {
       isHide: true,
+      gamePreferences: {},
     };
   },
   getters: {
-    isHide(state) {
-      return state.isHide;
-    },
+    // isHide(state) {
+    //   return state.isHide;
+    // },
   },
   mutations: {
     isHide(state, value) {
       state.isHide = value;
-      console.log(state.isHide);
+    },
+    gamePreferences(state, value) {
+      state.gamePreferences = value;
     },
   },
   actions: {
-    isHide(context, value) {
-      context.commit("isHide", value);
-    },
+    // isHide(context, value) {
+    //   context.commit("isHide", value);
+    // },
   },
 });
 
