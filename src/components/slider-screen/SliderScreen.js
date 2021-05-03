@@ -75,7 +75,6 @@ export default {
       });
       return toast.present();
     },
-
     /** BUSINESS LOGIC **/
     async checkNetworkStatusChange() {
       let connectedRef = firebaseDB.ref(".info/connected");
@@ -91,7 +90,6 @@ export default {
         }
       });
     },
-
     async checkLocalContent() {
       const hasDB = await downloadContent.checkLocalContent();
       if (hasDB) {
@@ -102,7 +100,6 @@ export default {
         this.$emit("hide-slider", true);
       }
     },
-
     async downloadContent() {
       const loading = await this.presentLoading();
       this.loading = loading;
@@ -113,10 +110,11 @@ export default {
           .collection("contents")
           .delete()
           .then(async () => {
-            await loading.dismiss();
-            this.popupToast("Network Interrupted!", "danger", 5000, "bottom");
+            await loading.dismiss().then(async () => {
+              await this.popupToast("Network Interrupted!", "danger", 5000, "bottom");
+            });      
           });
-      }, 60000);
+      }, 50000);
     },
   },
 };
