@@ -43,18 +43,17 @@
             <div class="note">
               Please connect to the internet to Download the content. Thank you!
             </div>
-            <!-- <img src="../../../public/assets/design/congrats.png" /> -->
           </div>
           <div v-if="!internetStatus">
             <img src="../../../public/assets/design/congrats.png" />
+            <h2>Download Contents</h2>
+            <ion-button
+              @click="downloadContent()"
+              :disabled="internetStatus"
+              color="success"
+              >Download<ion-icon slot="end" :icon="downloadOutline"></ion-icon
+            ></ion-button>
           </div>
-          <h2>Download Contents</h2>
-          <ion-button
-            @click="downloadContent()"
-            :disabled="internetStatus"
-            color="success"
-            >Download<ion-icon slot="end" :icon="downloadOutline"></ion-icon
-          ></ion-button>
         </div>
       </ion-slide>
     </ion-slides>
