@@ -11,9 +11,12 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonInput,
+  IonItem,
+  IonLabel,
   createAnimation,
 } from "@ionic/vue";
-import { mic, checkmarkOutline, closeOutline } from "ionicons/icons";
+import { mic, checkmarkOutline, closeOutline, pause } from "ionicons/icons";
 import Localbase from "localbase";
 
 let localDB = new Localbase("db");
@@ -33,6 +36,9 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
+    IonInput,
+    IonItem,
+    IonLabel,
   },
   data() {
     return {
@@ -47,26 +53,57 @@ export default {
       isAnswerWrong: false,
       continueAnswer: false,
       newHighScore: false,
+      nameInputted: true,
       displayContents: null,
       colorTapBtn: this.color,
       colorCheckBtn: "successoutline",
+      playerName: "",
       contentPosition: 1,
       answerCounter: 0,
       score: 0,
       gameTimer: 10,
       currentTimer: 0,
+      soundTimer: 0,
+      soundDelay: 500,
       delay: 1000,
       // icon
       mic,
       checkmarkOutline,
       closeOutline,
+      pause,
     };
   },
   created() {
     this.fetchContent();
   },
   unmounted() {
-    this.gameTimer = 0;
+    console.log("here!");
+    this.showGameContent = true;
+    this.nameInputted = false;
+    this.newHighScore = false;
+    this.contentPosition = 1;
+    this.answerCounter = 0;
+    this.score = 0;
+    this.gameTimer = 10;
+    this.playerName = "";
+    clearTimeout(this.currentTimer);
+  },
+  watch: {
+    gamePreferences: function(val) {
+      if (val.timer == "pause" || val.timer == "resume") {
+        this.timer("", "", "", val.timer, val.timer);
+      }
+    },
+  },
+  computed: {
+    gamePreferences: {
+      get() {
+        return this.$store.state.gamePreferences;
+      },
+      set(val) {
+        this.$store.commit("gamePreferences", val);
+      },
+    },
   },
   methods: {
     /** BUSINESS LOGIC **/
@@ -147,19 +184,23 @@ export default {
         this.isAnswerCorrect = true;
         this.score += 10 * this.gameTimer;
         this.answerCounter += 1;
-        this.playSound("correct").then((audio) => {
-          audio.play();
-        });
-        this.timer("", "pause", "");
+        this.playSound("correct")
+          .then((audio) => {
+            audio.play();
+          })
+          .catch((err) => console.log(err));
+        this.timer("", "stop", "");
       } else {
         this.colorCheckBtn = "dangeroutline";
         this.colorTapBtn = "danger";
         this.continueAnswer = true;
         this.isAnswerWrong = true;
-        this.playSound("wrong").then((audio) => {
-          audio.play();
-        });
-        this.timer("", "pause", "");
+        this.playSound("wrong")
+          .then((audio) => {
+            audio.play();
+          })
+          .catch((err) => console.log(err));
+        this.timer("", "stop", "");
       }
     },
     continueAnswering() {
@@ -170,6 +211,7 @@ export default {
         this.colorCheckBtn = "successoutline";
         this.contentPosition += 1;
         this.timer("", "", "restart");
+        this.gamePreferences = { score: this.score };
       } else {
         this.isAnswerCorrect = false;
         this.isAnswerWrong = false;
@@ -179,104 +221,97 @@ export default {
         this.tappedIndex = null;
         this.colorCheckBtn = "successoutline";
         this.contentPosition += 1;
-        this.gameScore();
+        this.displayInputPlayerName();
       }
     },
-    gameScore() {
-      let self = this;
-      let addScore = function() {
-        console.log("Add New Score!");
-        localDB.collection("score").add(
-          {
-            id: self.$route.params.id,
-            score: self.score,
-          },
-          self.$route.params.id
-        );
-      };
-      let updateScore = function(score) {
-        let currentScore = score;
-        console.log(currentScore, self.score);
-        if (currentScore < self.score) {
-          // new highscore!
-          self.newHighScore = true;
-          localDB
-            .collection("score")
-            .doc({ id: self.$route.params.id })
-            .set({
-              id: self.$route.params.id,
-              score: self.score,
-            });
-        } else {
-          console.log("Already have Highscore!");
-        }
-      };
-
-      localDB
+    async displayInputPlayerName() {
+      const doc = await localDB
         .collection("score")
-        .get()
-        .then((res) => {
-          if (res.length == 0) {
-            addScore();
-          } else {
-            res.some((r) => {
-              // check first if all game has score
-              console.log(r.id);
-              if (
-                r.id == "animals" &&
-                r.id == "colors" &&
-                r.id == "words" &&
-                r.id == "numbers"
-              ) {
-                console.log("All game has score");
-                // compare prev and curr score then UPDATE
-                updateScore(r.score);
-              } else {
-                console.log(r.id, this.$route.params.id);
-                if (r.id == this.$route.params.id) {
-                  // if existed
-                  if (r.id == "animals") {
-                    updateScore(r.score);
-                    return true;
-                  } else if (r.id == "colors") {
-                    updateScore(r.score);
-                    return true;
-                  } else if (r.id == "words") {
-                    updateScore(r.score);
-                    return true;
-                  } else if (r.id == "numbers") {
-                    updateScore(r.score);
-                    return true;
-                  }
-                } else {
-                  console.log(r.id, this.$route.params.id);
-                  // if not existed
-                  if (r.id != this.$route.params.id) {
-                    addScore();
-                    return true;
-                  }
-                }
-              }
-            });
+        .doc(this.$route.params.id)
+        .get();
+
+      if (doc) {
+        if (doc.score.length != 5) {
+          console.log("here!");
+          this.newHighScore = true;
+        }
+      } else {
+        console.log("here!");
+        this.newHighScore = true;
+      }
+    },
+    async gameScore() {
+      this.nameInputted = false;
+      let self = this;
+      let dataArr = [];
+      let addScore = function(dataArr) {
+        console.log("Add New Score!");
+        let data = {
+          score: self.score,
+          playerName: self.playerName == "" ? "Unknown" : self.playerName,
+        };
+        dataArr.push(data);
+        localDB
+          .collection("score")
+          .add({ score: dataArr }, self.$route.params.id);
+      };
+      // get documents
+      const doc = await localDB
+        .collection("score")
+        .doc(this.$route.params.id)
+        .get();
+
+      if (doc) {
+        if (doc.score.length != 5) {
+          // add until top 5
+          addScore(doc.score);
+        } else {
+          // detect if has new high score
+          let score = doc.score.sort((a, b) => b.score - a.score);
+          if (score[4].score < this.score) {
+            score[4] = {
+              score: this.score,
+              playerName: this.playerName == "" ? "Unknown" : this.playerName,
+            };
+            doc.score = score;
+            localDB
+              .collection("score")
+              .doc(this.$route.params.id)
+              .update({ score: doc.score });
           }
-        });
+        }
+      } else {
+        // if doc not exist addScore
+        addScore(dataArr);
+      }
     },
     async playSound(id) {
-      const audio = document.getElementById(id);
-      return audio;
+      let offAudio = true;
+      if (offAudio) {
+        const audio = document.getElementById(id);
+        return audio;
+      }
     },
-    timer(start, pause, restart) {
+    timer(start, stop, restart, pause, resume) {
       let self = this;
-      let countDownTimer = function() {
+
+      let countDownTimer = function(timer) {
+        if (typeof timer != "undefined") {
+          self.gameTimer = timer;
+        }
         if (self.gameTimer > 0) {
           self.currentTimer = setTimeout(() => {
             self.gameTimer -= 1;
             countDownTimer();
           }, self.delay);
-          if (self.gameTimer == 4) {
-            self.playSound("countdown").then((audio) => {
-              audio.play();
-            });
+          if (self.gameTimer <= 4) {
+            self
+              .playSound("countdown")
+              .then(async (audio) => {
+                console.log("play: ", audio.currentTime);
+                await audio.play();
+              })
+              .catch((err) => console.log(err));
           }
         } else if (self.gameTimer == 0) {
           console.log("Timer Over!");
@@ -285,41 +320,65 @@ export default {
           self.isAnswerWrong = true;
           self.colorCheckBtn = "dangeroutline";
           self.colorTapBtn = "danger";
-          self.playSound("wrong").then((audio) => {
-            audio.play();
-          });
+          self
+            .playSound("wrong")
+            .then((audio) => {
+              audio.play();
+            })
+            .catch((err) => console.log(err));
         }
       };
 
       if (start == "start") {
         countDownTimer();
-      } else if (pause == "pause") {
+      } else if (stop == "stop") {
+        this.soundDelay = 500;
         clearTimeout(this.currentTimer);
         this.playSound("countdown").then((audio) => {
-          audio.currentTime = 0;
           audio.pause();
+          audio.currentTime = 0;
         });
       } else if (restart == "restart") {
         this.gameTimer = 10;
+      } else if (pause == "pause") {
+        if (this.gameTimer != 0) {
+          clearTimeout(this.currentTimer);
+          if (this.gameTimer <= 4) {
+            this.playSound("countdown").then((audio) => {
+              audio.pause();
+              console.log("pause: ", audio.currentTime);
+            });
+          }
+        }
+      } else if (resume == "resume") {
+        this.soundDelay = 1000;
+        countDownTimer(this.gameTimer);
       }
     },
     /** UI LOGIC **/
     playAgain() {
       this.showGameContent = true;
+      this.nameInputted = false;
+      this.newHighScore = false;
       this.contentPosition = 1;
       this.answerCounter = 0;
       this.score = 0;
       this.gameTimer = 10;
+      this.playerName = "";
+      this.gamePreferences = { score: 0, timer: 0 };
       clearTimeout(this.currentTimer);
-      this.fetchContent();
     },
     exitQuiz() {
-      this.$router.push("/game").then(() => {
+      this.$router.replace("/game").then(() => {
         this.showGameContent = true;
+        this.nameInputted = false;
+        this.newHighScore = false;
         this.contentPosition = 1;
         this.answerCounter = 0;
         this.score = 0;
         this.gameTimer = 10;
+        this.playerName = "";
+        this.gamePreferences = { score: 0, timer: 0 };
         clearTimeout(this.currentTimer);
       });
     },

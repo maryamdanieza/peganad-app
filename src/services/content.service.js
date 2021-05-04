@@ -3,6 +3,7 @@ import {
   colorsQuery,
   numbersQuery,
   wordsQuery,
+  firestoreDB,
 } from "../firestore/firebaseInit.js";
 import Localbase from "localbase";
 
@@ -44,6 +45,15 @@ class ContentService {
       wordsArr.push(r.data());
     });
     return wordsArr;
+  }
+
+  async getContentByName(collectionName) {
+    let contentArr = [];
+    const res = await firestoreDB.collection(collectionName).get();
+    res.forEach((r) => {
+      contentArr.push(r.data());
+    });
+    return contentArr;
   }
 }
 

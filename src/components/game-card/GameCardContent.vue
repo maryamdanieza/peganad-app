@@ -156,8 +156,24 @@
     <ion-card class="ion-margin-bottom">
       <ion-card-content class="ion-text-center">
         <ion-card-subtitle class="ion-text-capitalize" color="pink">
-          <span v-if="newHighScore">New Personal Best!</span>
+          <span v-if="newHighScore" class="ion-padding">
+            New Personal Best!
+          </span>
           <span v-else>Personal Best!</span>
+        </ion-card-subtitle>
+        <ion-card-subtitle color="primary">
+          <div v-if="!nameInputted">
+            Player Name: {{ playerName == "" ? "Unknown" : playerName }}
+          </div>
+          <div v-else-if="nameInputted && newHighScore">
+            <ion-item>
+              <ion-input
+                v-model="playerName"
+                placeholder="Your Name"
+              ></ion-input>
+            </ion-item>
+            <ion-button @click="gameScore()">Save</ion-button>
+          </div>
         </ion-card-subtitle>
         <ion-card-title class="ion-text-uppercase" :color="color"
           >Score: {{ score }}</ion-card-title
@@ -197,16 +213,19 @@
       >
     </div>
   </div>
-  <audio id="correct" preload="none">
+  <audio id="correct" preload="auto">
     <source
       src="../../../public/assets/audio/correct-sound.wav"
       type="audio/wav"
     />
   </audio>
-  <audio id="wrong" preload="none">
-    <source src="../../../public/assets/audio/wrong-sound.wav" type="audio/wav" />
+  <audio id="wrong" preload="auto">
+    <source
+      src="../../../public/assets/audio/wrong-sound.wav"
+      type="audio/wav"
+    />
   </audio>
-  <audio id="countdown" preload="none">
+  <audio id="countdown" preload="auto">
     <source src="../../../public/assets/audio/countdown.wav" type="audio/wav" />
   </audio>
 </template>

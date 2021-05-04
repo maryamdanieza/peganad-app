@@ -7,7 +7,7 @@ let localDB = new Localbase("db");
 localDB.config.debug = false;
 
 let counter = 0;
-
+let downloadByName = false;
 class DownloadContent {
   async checkLocalContent() {
     const db = await localDB.collection("contents").get();
@@ -23,6 +23,17 @@ class DownloadContent {
           return false;
         });
     }
+  }
+
+  async downloadContentByName(collectionName) {
+    let contentObj = {};
+    let collection = await contentService.getContentByName(collectionName);
+    contentObj[collectionName] = collection;
+    await this.updateContent(contentObj[collectionName], [collectionName]).then(
+      () => {
+        downloadByName = true;
+      }
+    );
   }
 
   async downloadContent() {
@@ -106,9 +117,13 @@ class DownloadContent {
   }
 
   async storeDataToLocalDB(docData, docName) {
+    console.log(docName[0]);
     await localDB
       .collection("contents")
-      .add({ [docName]: docData }, docName)
+      .add(
+        { [docName]: docData },
+        typeof docName == "string" ? docName : docName[0]
+      )
       .then(() => {
         counter++;
         console.log(counter);
@@ -118,7 +133,16 @@ class DownloadContent {
       });
     if (counter >= 4) {
       store.dispatch("isHide", false);
-      return false;
+    } else if (downloadByName) {
+      if (docName[0] == "aniamls") {
+        store.dispatch("isHide", 0);
+      } else if (docName[0] == "colors") {
+        store.dispatch("isHide", 1);
+      } else if (docName[0] == "numbers") {
+        store.dispatch("isHide", 2);
+      } else if (docName[0] == "words") {
+        store.dispatch("isHide", 3);
+      }
     }
   }
 

@@ -4,12 +4,15 @@
       <ion-slide>
         <div class="slide">
           <img src="../../../public/assets/design/numbers.png" />
-          <h1 class="slide1-text">Peganad App</h1>
-          <p>
-            The <b>Pegenad App</b> is lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Reiciendis ipsum eaque laudantium consequuntur
-            eius? Repudiandae facere numquam suscipit eaque sit cumque odio
-            rerum officia, incidunt, non tempore, sed recusandae. Iste.
+          <h1 class="slide1-text ">Peganad App</h1>
+          <p class="ion-text-justify">
+            The <b>Pegenad App</b> is from the Meranaw word which means “To
+            learn”. <b>Peganad App is a mobile learning application</b> that
+            teaches basic Meranaw vocabulary that will focus on the children as
+            the primary user from ages 4-8. The learning application aims to
+            help the children by providing alternative and interactive learning
+            materials. It offers 70 words through a series of lesson and game
+            with native speaker audio clips.
           </p>
         </div>
       </ion-slide>
@@ -19,10 +22,10 @@
           <img src="../../../public/assets/design/study.png" />
           <h1 class="slide2-text">Learn</h1>
           <p>
-            <b>Learning</b> is lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Reiciendis ipsum eaque laudantium consequuntur
-            eius? Repudiandae facere numquam suscipit eaque sit cumque odio
-            rerum officia, incidunt, non tempore, sed recusandae. Iste.
+            Learn useful basic Meranaw language like Numbers, Colors, Animals
+            and some Basic words (noun). Every words would guide the children by
+            showing a picture and listening to a native speaker audio clip
+            provided by the application.
           </p>
         </div>
       </ion-slide>
@@ -30,12 +33,11 @@
       <ion-slide>
         <div class="slide">
           <img src="../../../public/assets/design/game.png" />
-          <h1 class="slide3-text">Play</h1>
+          <h1 class="slide3-text">Game</h1>
           <p>
-            <b>Playing</b> is lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Reiciendis ipsum eaque laudantium consequuntur eius?
-            Repudiandae facere numquam suscipit eaque sit cumque odio rerum
-            officia, incidunt, non tempore, sed recusandae. Iste.
+            Peganad App has mini-game (Multiple choice game) at the end to test
+            the learners of what they have learned. This mini-game will have a
+            set of words to be translated depends on the category you choose.
           </p>
         </div>
       </ion-slide>

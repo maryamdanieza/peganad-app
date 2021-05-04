@@ -4,19 +4,29 @@
       <ion-toolbar :color="toolbarColor">
         <ion-buttons slot="start">
           <ion-back-button
-            v-if="$route.fullPath != '/home' && $route.fullPath != '/game'"
-            :default-href="pageDefaultBackLink"
+            v-if="
+              $route.fullPath != '/home' &&
+                $route.fullPath != '/learn' &&
+                $route.fullPath != '/game'
+            "
+            :icon="closeOutline"
+            @click="routerBack(pageDefaultBackLink)"
           ></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-button v-if="$route.fullPath == '/learn'" routerLink="/">
+            <ion-icon slot="icon-only" :icon="arrowBackOutline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="start">
+          <ion-button v-if="$route.fullPath == '/game'" routerLink="/">
+            <ion-icon slot="icon-only" :icon="arrowBackOutline"></ion-icon>
+          </ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
           <ion-button v-if="$route.fullPath == '/game'" routerLink="/score">
             <ion-icon slot="icon-only" :icon="trophy"></ion-icon>
           </ion-button>
-        </ion-buttons>
-        <ion-buttons slot="start">
-        <ion-button v-if="$route.fullPath == '/game'" routerLink="/">
-          <ion-icon slot="icon-only" :icon="arrowBackOutline"></ion-icon>
-        </ion-button>
         </ion-buttons>
         <ion-title class="ion-text-center">{{ pageTitle }}</ion-title>
       </ion-toolbar>
@@ -39,8 +49,9 @@ import {
   IonIcon,
   IonTitle,
   IonContent,
+  alertController,
 } from "@ionic/vue";
-import { grid, trophy, arrowBackOutline } from "ionicons/icons";
+import { grid, trophy, arrowBackOutline, closeOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
 
 const { StatusBar } = Plugins;
@@ -67,23 +78,76 @@ export default {
   },
   data() {
     return {
+      isPause: false,
       //   icon
       grid,
       trophy,
       arrowBackOutline,
+      closeOutline,
     };
   },
-  created() {},
   mounted() {
     this.statusBar();
   },
-  unmounted() {},
+  computed: {
+    gamePreferences: {
+      get() {
+        return this.$store.state.gamePreferences;
+      },
+      set(val) {
+        this.$store.commit("gamePreferences", val);
+      },
+    },
+  },
   methods: {
     async statusBar() {
       const statusBar = await StatusBar.setBackgroundColor({
         color: this.statusBarColor,
       });
       return statusBar;
+    },
+    async presentAlertConfirm(pageDefaultBackLink) {
+      const alert = await alertController.create({
+        cssClass: "my-custom-class",
+        header: "Confirm",
+        message: "Are you sure you want to leave?",
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              this.gamePreferences = {
+                timer: "resume",
+                score: this.gamePreferences.score,
+              };
+            },
+          },
+          {
+            text: "Okay",
+            handler: async () => {
+              this.gamePreferences = { score: 0 };
+              await this.$router.replace(pageDefaultBackLink);
+            },
+          },
+        ],
+      });
+      return alert.present();
+    },
+    async routerBack(pageDefaultBackLink) {
+      if (
+        this.gamePreferences.score != 0 &&
+        typeof this.gamePreferences.score != "undefined"
+      ) {
+        // pause timer when dialog is popup
+        this.gamePreferences = {
+          timer: "pause",
+          score: this.gamePreferences.score,
+        };
+        this.presentAlertConfirm(pageDefaultBackLink);
+      } else {
+        await this.$router.replace(pageDefaultBackLink);
+      }
     },
   },
 };
