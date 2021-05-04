@@ -20,33 +20,130 @@
       <div class="sub-content">
         <ion-grid>
           <ion-row class="ion-justify-content-center ion-align-items-center">
-            <template v-for="(game, index) in gamesBestScore" :key="index">
-              <ion-col class="ion-no-padding" size="12">
-                <ion-card>
-                  <ion-card-content>
-                    <ion-row
-                      class="ion-justify-content-between ion-align-items-center"
+            <ion-col class="ion-no-padding" size="12">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row
+                    class="ion-justify-content-between ion-align-items-center"
+                  >
+                    <ion-col size="3">
+                      <div>
+                        <img src="../../../public/assets/design/animals.png" />
+                      </div>
+                    </ion-col>
+                    <ion-col class="game-name ion-text-center" size="9"
+                      ><h1>Animal Best Scores</h1></ion-col
                     >
-                      <ion-col size="3">
-                        <div>
-                          <img
-                            :src="
-                              require(`../../../public/assets/design/${game.img}`)
-                            "
-                          />
-                        </div>
-                      </ion-col>
-                      <ion-col class="game-name ion-text-center" size="7">{{
-                        game.name
-                      }}</ion-col>
-                      <ion-col class="game-score ion-text-end" size="2"
-                        ><span>{{ game.score }}</span></ion-col
+                    <ion-col size="12">
+                      <ion-list>
+                        <ion-item
+                          class="ion-text-center"
+                          v-for="(score, index) in animalScore"
+                          :key="index"
+                        >
+                          <ion-label color="pink">
+                            {{ score.playerName + " - " + score.score }}
+                          </ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row
+                    class="ion-justify-content-between ion-align-items-center"
+                  >
+                    <ion-col size="3">
+                      <div>
+                        <img src="../../../public/assets/design/colors.png" />
+                      </div>
+                    </ion-col>
+                    <ion-col class="game-name ion-text-center" size="9"
+                      ><h1>Color Best Scores</h1></ion-col
+                    >
+                  </ion-row>
+                  <ion-col size="12">
+                    <ion-list>
+                      <ion-item
+                        class="ion-text-center"
+                        v-for="(score, index) in colorScore"
+                        :key="index"
                       >
-                    </ion-row>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-            </template>
+                        <ion-label color="pink">
+                          {{ score.playerName + " - " + score.score }}
+                        </ion-label>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row
+                    class="ion-justify-content-between ion-align-items-center"
+                  >
+                    <ion-col size="3">
+                      <div>
+                        <img src="../../../public/assets/design/numbers.png" />
+                      </div>
+                    </ion-col>
+                    <ion-col class="game-name ion-text-center" size="9"
+                      ><h1>Number Best Scores</h1></ion-col
+                    >
+                    <ion-col size="12">
+                      <ion-list>
+                        <ion-item
+                          class="ion-text-center"
+                          v-for="(score, index) in numberScore"
+                          :key="index"
+                        >
+                          <ion-label color="pink">
+                            {{ score.playerName + " - " + score.score }}
+                          </ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row
+                    class="ion-justify-content-between ion-align-items-center"
+                  >
+                    <ion-col size="3">
+                      <div>
+                        <img src="../../../public/assets/design/words.png" />
+                      </div>
+                    </ion-col>
+                    <ion-col class="game-name ion-text-center" size="9"
+                      ><h1>Word Best Scores</h1></ion-col
+                    >
+                    <ion-col size="12">
+                      <ion-list>
+                        <ion-item
+                          class="ion-text-center"
+                          v-for="(score, index) in wordScore"
+                          :key="index"
+                        >
+                          <ion-label color="pink">
+                            {{ score.playerName + " - " + score.score }}
+                          </ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </div>
@@ -62,9 +159,16 @@ import {
   IonCol,
   IonCard,
   IonCardContent,
+  IonList,
+  IonItem,
+  IonLabel,
 } from "@ionic/vue";
 import { gameControllerOutline, trophy } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 const { StatusBar } = Plugins;
 
@@ -77,49 +181,84 @@ export default {
     IonCol,
     IonCard,
     IonCardContent,
+    IonList,
+    IonItem,
+    IonLabel,
   },
   data() {
     return {
-      gamesBestScore: [
-        {
-          name: "Animals Best Score",
-          score: "1000",
-          time: "7 Seconds",
-          img: "animals.png",
-        },
-        {
-          name: "Colors Best Score",
-          score: "800",
-          time: "9 seconds",
-          img: "colors.png",
-        },
-        {
-          name: "Numbers Best Score",
-          score: "800",
-          time: "9 seconds",
-          img: "numbers.png",
-        },
-        {
-          name: "Words Best Score",
-          score: "800",
-          time: "9 seconds",
-          img: "words.png",
-        },
-      ],
+      animalScore: {},
+      colorScore: {},
+      numberScore: {},
+      wordScore: {},
       // icons
       gameControllerOutline,
       trophy,
       statusBarColor: "#f3128a",
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.statusBar();
   },
+  created() {
+    this.getScore();
+  },
   methods: {
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    // Business Login
+    async getScore() {
+      await Promise.all([
+        (async () => {
+          let animals = await localDB
+            .collection("score")
+            .doc("animals")
+            .get();
+          if (animals != null) {
+            let animalScore = animals.score.sort((a, b) => b.score - a.score);
+            this.animalScore = animalScore;
+            console.log(this.animalScore);
+          }
+        })(),
+        (async () => {
+          let colors = await localDB
+            .collection("score")
+            .doc("colors")
+            .get();
+          if (colors != null) {
+            let colorScore = colors.score.sort((a, b) => b.score - a.score);
+            this.colorScore = colorScore;
+            console.log(this.colorScore);
+          }
+        })(),
+        (async () => {
+          let numbers = await localDB
+            .collection("score")
+            .doc("numbers")
+            .get();
+          if (numbers != null) {
+            let numberScore = numbers.score.sort((a, b) => b.score - a.score);
+            this.numberScore = numberScore;
+            console.log(this.numberScore);
+          }
+        })(),
+        (async () => {
+          let words = await localDB
+            .collection("score")
+            .doc("words")
+            .get();
+          if (words != null) {
+            let wordScore = words.score.sort((a, b) => b.score - a.score);
+            this.wordScore = wordScore;
+            console.log(this.wordScore);
+          }
+        })(),
+      ]).catch((err) => console.log(err));
+    },
+    // UI Logic
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: this.statusBarColor,
       });
+      return statusBar;
     },
   },
 };

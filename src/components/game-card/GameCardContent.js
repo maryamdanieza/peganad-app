@@ -11,9 +11,12 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonInput,
+  IonItem,
+  IonLabel,
   createAnimation,
 } from "@ionic/vue";
-import { mic, checkmarkOutline, closeOutline } from "ionicons/icons";
+import { mic, checkmarkOutline, closeOutline, pause } from "ionicons/icons";
 import Localbase from "localbase";
 
 let localDB = new Localbase("db");
@@ -33,6 +36,9 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
+    IonInput,
+    IonItem,
+    IonLabel,
   },
   data() {
     return {
@@ -46,20 +52,58 @@ export default {
       isAnswerCorrect: false,
       isAnswerWrong: false,
       continueAnswer: false,
+      newHighScore: false,
+      nameInputted: true,
       displayContents: null,
       colorTapBtn: this.color,
       colorCheckBtn: "successoutline",
+      playerName: "",
       contentPosition: 1,
+      answerCounter: 0,
       score: 0,
-      timeLeft: 0,
+      gameTimer: 10,
+      currentTimer: 0,
+      soundTimer: 0,
+      soundDelay: 500,
+      delay: 1000,
       // icon
       mic,
       checkmarkOutline,
       closeOutline,
+      pause,
     };
   },
   created() {
     this.fetchContent();
+  },
+  unmounted() {
+    console.log("here!");
+    this.showGameContent = true;
+    this.nameInputted = false;
+    this.newHighScore = false;
+    this.contentPosition = 1;
+    this.answerCounter = 0;
+    this.score = 0;
+    this.gameTimer = 10;
+    this.playerName = "";
+    clearTimeout(this.currentTimer);
+  },
+  watch: {
+    gamePreferences: function(val) {
+      if (val.timer == "pause" || val.timer == "resume") {
+        this.timer("", "", "", val.timer, val.timer);
+      }
+    },
+  },
+  computed: {
+    gamePreferences: {
+      get() {
+        return this.$store.state.gamePreferences;
+      },
+      set(val) {
+        this.$store.commit("gamePreferences", val);
+      },
+    },
   },
   methods: {
     /** BUSINESS LOGIC **/
@@ -69,11 +113,11 @@ export default {
         .get()
         .then((contents) => {
           contents.forEach((content) => {
-            console.log(content);
             if (content[this.routerParam]) {
               this.contents = content;
-              this.displayContentOneByOne();
+              this.generateRandomContents();
               this.generateRandomAnswer();
+              this.displayContentOneByOne();
             }
           });
         });
@@ -81,7 +125,6 @@ export default {
     displayContentOneByOne() {
       let routerParam = this.routerParam;
       let extractContent = this.contents[routerParam];
-      console.log(extractContent);
 
       const paginate = (array, index, size) => {
         // transform values
@@ -99,11 +142,16 @@ export default {
       };
 
       if (this.contentPosition <= extractContent.length) {
-        extractContent.sort(() => Math.random() - 0.5);
         let transform = paginate(extractContent, this.contentPosition, 1);
         this.displayContents = transform;
-        console.log(this.displayContents);
+        this.timer("start", "", "");
       }
+    },
+    generateRandomContents() {
+      let routerParam = this.routerParam;
+      let extractContent = this.contents[routerParam];
+      extractContent.sort(() => Math.random() - 0.5);
+      this.displayContents = extractContent;
     },
     generateRandomAnswer() {
       let routerParam = this.routerParam;
@@ -130,38 +178,29 @@ export default {
       }
     },
     checkAnswer() {
-      // const playAudio = function(value) {
-      //   const file = Media.create(
-      //     `file:///android_asset/public/assets/audio/${value}`
-      //   );
-      //   // to listen to plugin events:
-      //   file.onStatusUpdate.subscribe((status) => console.log(status)); // fires when file status changes
-
-      //   file.onSuccess.subscribe(() => console.log("Action is successful"));
-
-      //   file.onError.subscribe((error) => console.log("Error!", error));
-
-      //   // play the file
-      //   file.play();
-      // };
       if (this.answerSelected == this.correctAnswer) {
-        console.log("Correcnt Answer!");
         this.colorTapBtn = "success";
         this.continueAnswer = true;
         this.isAnswerCorrect = true;
-        this.score += 10;
-        let audioBase64 = require("../../../public/assets/audio/correct-sound.wav");
-        const audio = new Audio(audioBase64);
-        audio.play();
+        this.score += 10 * this.gameTimer;
+        this.answerCounter += 1;
+        this.playSound("correct")
+          .then((audio) => {
+            audio.play();
+          })
+          .catch((err) => console.log(err));
+        this.timer("", "stop", "");
       } else {
-        console.log("Wrong Answer! Correct Answer is: ", this.correctAnswer);
         this.colorCheckBtn = "dangeroutline";
         this.colorTapBtn = "danger";
         this.continueAnswer = true;
         this.isAnswerWrong = true;
-        let audioBase64 = require("../../../public/assets/audio/wrong-sound.wav");
-        const audio = new Audio(audioBase64);
-        audio.play();
+        this.playSound("wrong")
+          .then((audio) => {
+            audio.play();
+          })
+          .catch((err) => console.log(err));
+        this.timer("", "stop", "");
       }
     },
     continueAnswering() {
@@ -171,6 +210,8 @@ export default {
         this.continueAnswer = false;
         this.colorCheckBtn = "successoutline";
         this.contentPosition += 1;
+        this.timer("", "", "restart");
+        this.gamePreferences = { score: this.score };
       } else {
         this.isAnswerCorrect = false;
         this.isAnswerWrong = false;
@@ -180,10 +221,167 @@ export default {
         this.tappedIndex = null;
         this.colorCheckBtn = "successoutline";
         this.contentPosition += 1;
+        this.displayInputPlayerName();
       }
     },
+    async displayInputPlayerName() {
+      const doc = await localDB
+        .collection("score")
+        .doc(this.$route.params.id)
+        .get();
 
+      if (doc) {
+        if (doc.score.length != 5) {
+          console.log("here!");
+          this.newHighScore = true;
+        }
+      } else {
+        console.log("here!");
+        this.newHighScore = true;
+      }
+    },
+    async gameScore() {
+      this.nameInputted = false;
+      let self = this;
+      let dataArr = [];
+      let addScore = function(dataArr) {
+        console.log("Add New Score!");
+        let data = {
+          score: self.score,
+          playerName: self.playerName == "" ? "Unknown" : self.playerName,
+        };
+        dataArr.push(data);
+        localDB
+          .collection("score")
+          .add({ score: dataArr }, self.$route.params.id);
+      };
+      // get documents
+      const doc = await localDB
+        .collection("score")
+        .doc(this.$route.params.id)
+        .get();
+
+      if (doc) {
+        if (doc.score.length != 5) {
+          // add until top 5
+          addScore(doc.score);
+        } else {
+          // detect if has new high score
+          let score = doc.score.sort((a, b) => b.score - a.score);
+          if (score[4].score < this.score) {
+            score[4] = {
+              score: this.score,
+              playerName: this.playerName == "" ? "Unknown" : this.playerName,
+            };
+            doc.score = score;
+            localDB
+              .collection("score")
+              .doc(this.$route.params.id)
+              .update({ score: doc.score });
+          }
+        }
+      } else {
+        // if doc not exist addScore
+        addScore(dataArr);
+      }
+    },
+    async playSound(id) {
+      let offAudio = true;
+      if (offAudio) {
+        const audio = document.getElementById(id);
+        return audio;
+      }
+    },
+    timer(start, stop, restart, pause, resume) {
+      let self = this;
+
+      let countDownTimer = function(timer) {
+        if (typeof timer != "undefined") {
+          self.gameTimer = timer;
+        }
+        if (self.gameTimer > 0) {
+          self.currentTimer = setTimeout(() => {
+            self.gameTimer -= 1;
+            countDownTimer();
+          }, self.delay);
+          if (self.gameTimer <= 4) {
+            self
+              .playSound("countdown")
+              .then(async (audio) => {
+                console.log("play: ", audio.currentTime);
+                await audio.play();
+              })
+              .catch((err) => console.log(err));
+          }
+        } else if (self.gameTimer == 0) {
+          console.log("Timer Over!");
+          self.tappedAnswer = true;
+          self.continueAnswer = true;
+          self.isAnswerWrong = true;
+          self.colorCheckBtn = "dangeroutline";
+          self.colorTapBtn = "danger";
+          self
+            .playSound("wrong")
+            .then((audio) => {
+              audio.play();
+            })
+            .catch((err) => console.log(err));
+        }
+      };
+
+      if (start == "start") {
+        countDownTimer();
+      } else if (stop == "stop") {
+        this.soundDelay = 500;
+        clearTimeout(this.currentTimer);
+        this.playSound("countdown").then((audio) => {
+          audio.pause();
+          audio.currentTime = 0;
+        });
+      } else if (restart == "restart") {
+        this.gameTimer = 10;
+      } else if (pause == "pause") {
+        if (this.gameTimer != 0) {
+          clearTimeout(this.currentTimer);
+          if (this.gameTimer <= 4) {
+            this.playSound("countdown").then((audio) => {
+              audio.pause();
+              console.log("pause: ", audio.currentTime);
+            });
+          }
+        }
+      } else if (resume == "resume") {
+        this.soundDelay = 1000;
+        countDownTimer(this.gameTimer);
+      }
+    },
     /** UI LOGIC **/
+    playAgain() {
+      this.showGameContent = true;
+      this.nameInputted = false;
+      this.newHighScore = false;
+      this.contentPosition = 1;
+      this.answerCounter = 0;
+      this.score = 0;
+      this.gameTimer = 10;
+      this.playerName = "";
+      this.gamePreferences = { score: 0, timer: 0 };
+      clearTimeout(this.currentTimer);
+    },
+    exitQuiz() {
+      this.$router.replace("/game").then(() => {
+        this.showGameContent = true;
+        this.nameInputted = false;
+        this.newHighScore = false;
+        this.contentPosition = 1;
+        this.answerCounter = 0;
+        this.score = 0;
+        this.gameTimer = 10;
+        this.playerName = "";
+        this.gamePreferences = { score: 0, timer: 0 };
+        clearTimeout(this.currentTimer);
+      });
+    },
     slideAnimation(
       element,
       speed,
@@ -199,7 +397,6 @@ export default {
         .fromTo("opacity", opacityFrom, opacityTo);
       animation.play();
     },
-
     nextAnimation() {
       this.slideAnimation(
         ".card-content",

@@ -3,11 +3,16 @@
     <ion-slides>
       <ion-slide>
         <div class="slide">
-          <img src="../../../public/assets/design/game.png" />
-          <h2>Welcome</h2>
-          <p>
-            The <b>ionic conference app</b> is a practical preview of the ionic
-            framework in action, and a demonstration of proper code use.
+          <img src="../../../public/assets/design/numbers.png" />
+          <h1 class="slide1-text ">Peganad App</h1>
+          <p class="ion-text-justify">
+            The <b>Pegenad App</b> is from the Meranaw word which means “To
+            learn”. <b>Peganad App is a mobile learning application</b> that
+            teaches basic Meranaw vocabulary that will focus on the children as
+            the primary user from ages 4-8. The learning application aims to
+            help the children by providing alternative and interactive learning
+            materials. It offers 70 words through a series of lesson and game
+            with native speaker audio clips.
           </p>
         </div>
       </ion-slide>
@@ -15,23 +20,24 @@
       <ion-slide>
         <div class="slide">
           <img src="../../../public/assets/design/study.png" />
-          <h2>What is Ionic?</h2>
+          <h1 class="slide2-text">Learn</h1>
           <p>
-            <b>Ionic Framework</b> is an open source SDK that enables developers
-            to build high quality mobile apps with web technologies like HTML,
-            CSS, and JavaScript.
+            Learn useful basic Meranaw language like Numbers, Colors, Animals
+            and some Basic words (noun). Every words would guide the children by
+            showing a picture and listening to a native speaker audio clip
+            provided by the application.
           </p>
         </div>
       </ion-slide>
 
       <ion-slide>
         <div class="slide">
-          <img src="../../../public/assets/design/colors.png" />
-          <h2>What is Ionic Appflow?</h2>
+          <img src="../../../public/assets/design/game.png" />
+          <h1 class="slide3-text">Game</h1>
           <p>
-            <b>Ionic Appflow</b> is a powerful set of services and features
-            built on top of Ionic Framework that brings a totally new level of
-            app development agility to mobile dev teams.
+            Peganad App has mini-game (Multiple choice game) at the end to test
+            the learners of what they have learned. This mini-game will have a
+            set of words to be translated depends on the category you choose.
           </p>
         </div>
       </ion-slide>
@@ -46,7 +52,7 @@
           </div>
           <div v-if="!internetStatus">
             <img src="../../../public/assets/design/congrats.png" />
-            <h2>Download Contents</h2>
+            <h1 class="slide4-text">Download Contents</h1>
             <ion-button
               @click="downloadContent()"
               :disabled="internetStatus"

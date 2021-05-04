@@ -33,11 +33,13 @@
                 </div>
               </ion-col>
               <ion-col size="4">
-                <div class="ion-text-center">
+                <div class="ion-text-center ">
                   <span style="font-size: 15px">
                     Time
                   </span>
-                  <div>:10</div>
+                  <div :style="gameTimer <= 4 ? 'color: red' : ''">
+                    :{{ gameTimer }}
+                  </div>
                 </div>
               </ion-col>
               <ion-col size="4">
@@ -154,13 +156,30 @@
     <ion-card class="ion-margin-bottom">
       <ion-card-content class="ion-text-center">
         <ion-card-subtitle class="ion-text-capitalize" color="pink">
-          Personal Best!
+          <span v-if="newHighScore" class="ion-padding">
+            New Personal Best!
+          </span>
+          <span v-else>Personal Best!</span>
+        </ion-card-subtitle>
+        <ion-card-subtitle color="primary">
+          <div v-if="!nameInputted">
+            Player Name: {{ playerName == "" ? "Unknown" : playerName }}
+          </div>
+          <div v-else-if="nameInputted && newHighScore">
+            <ion-item>
+              <ion-input
+                v-model="playerName"
+                placeholder="Your Name"
+              ></ion-input>
+            </ion-item>
+            <ion-button @click="gameScore()">Save</ion-button>
+          </div>
         </ion-card-subtitle>
         <ion-card-title class="ion-text-uppercase" :color="color"
           >Score: {{ score }}</ion-card-title
         >
         <ion-card-subtitle class="ion-text-capitalize">
-          Words you got right: {{ score / 10 }} /
+          Words you got right: {{ answerCounter }} /
           {{ contents[routerParam].length }}
         </ion-card-subtitle>
       </ion-card-content>
@@ -181,6 +200,7 @@
         size="large"
         color="successoutline"
         shape="round"
+        @click="playAgain()"
         >Play Again?</ion-button
       >
       <ion-button
@@ -188,10 +208,26 @@
         size="large"
         color="dangeroutline"
         shape="round"
+        @click="exitQuiz()"
         >Exit Quiz</ion-button
       >
     </div>
   </div>
+  <audio id="correct" preload="auto">
+    <source
+      src="../../../public/assets/audio/correct-sound.wav"
+      type="audio/wav"
+    />
+  </audio>
+  <audio id="wrong" preload="auto">
+    <source
+      src="../../../public/assets/audio/wrong-sound.wav"
+      type="audio/wav"
+    />
+  </audio>
+  <audio id="countdown" preload="auto">
+    <source src="../../../public/assets/audio/countdown.wav" type="audio/wav" />
+  </audio>
 </template>
 
 <script>

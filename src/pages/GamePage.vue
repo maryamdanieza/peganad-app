@@ -31,6 +31,18 @@
                 button="true"
                 :routerLink="card.link"
               >
+                <div class="ion-text-center ion-padding-top">
+                  <ion-button
+                    v-if="card.hasNewData"
+                    color="success"
+                    size="small"
+                    fill="solid"
+                    @click.prevent.stop="downloadContent(card.title)"
+                  >
+                    <ion-icon slot="start" :icon="downloadOutline"></ion-icon>
+                    New content!</ion-button
+                  >
+                </div>
                 <ion-card-content>
                   <img
                     :src="require(`../../public/assets/design/${card.img}`)"
@@ -52,6 +64,7 @@
 </template>
 
 <script>
+import downloadContent from "../services/download-content.service.js";
 import {
   IonText,
   IonCard,
@@ -59,9 +72,24 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonButton,
+  IonIcon,
+  loadingController,
+  toastController,
 } from "@ionic/vue";
-import { gameControllerOutline } from "ionicons/icons";
+import { gameControllerOutline, downloadOutline } from "ionicons/icons";
 import { Plugins } from "@capacitor/core";
+import {
+  animalsQuery,
+  colorsQuery,
+  wordsQuery,
+  numbersQuery,
+  firebaseDB,
+} from "../firestore/firebaseInit.js";
+import Localbase from "localbase";
+
+let localDB = new Localbase("db");
+localDB.config.debug = false;
 
 const { StatusBar } = Plugins;
 
@@ -70,21 +98,25 @@ const cards = [
     title: "Animals",
     img: "animals.png",
     link: "/game/animals",
+    hasNewData: false,
   },
   {
     title: "Colors",
     img: "colors.png",
     link: "/game/colors",
+    hasNewData: false,
   },
   {
     title: "Numbers",
     img: "numbers.png",
     link: "/game/numbers",
+    hasNewData: false,
   },
   {
     title: "Words",
     img: "words.png",
     link: "/game/words",
+    hasNewData: false,
   },
 ];
 
@@ -98,23 +130,158 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
+    IonButton,
+    IonIcon,
   },
   data() {
     return {
       cards: cards,
+      loading: "",
       // icons
       gameControllerOutline,
+      downloadOutline,
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.statusBar();
-    console.log(this.$store.getters.contents);
+  },
+  created() {
+    this.checkNetworkStatusChange();
+  },
+  watch: {
+    // to hide slider when successfully downloaded the content!
+    isHide: function(val) {
+      console.log("here!", val);
+      this.loading.dismiss().then(() => {
+        clearTimeout(this.currentTimer);
+        if (val == 0) {
+          this.cards[0].hasNewData = false;
+        } else if (val == 1) {
+          this.cards[1].hasNewData = false;
+        } else if (val == 2) {
+          this.cards[2].hasNewData = false;
+        } else if (val == 3) {
+          this.cards[3].hasNewData = false;
+        }
+      });
+    },
+  },
+  computed: {
+    isHide: {
+      get() {
+        return this.$store.state.isHide;
+      },
+      set(val) {
+        this.$store.commit("isHide", val);
+      },
+    },
   },
   methods: {
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: "#faa329",
       });
+      return statusBar;
+    },
+    async presentLoading() {
+      const loading = await loadingController.create({
+        message: "Downloading please wait...",
+      });
+      this.loading = loading;
+      return loading;
+    },
+    async popupToast(message, color, duration, position) {
+      console.log(message, color, duration, position);
+      const toast = await toastController.create({
+        message: message,
+        color: color,
+        duration: duration,
+        position: position,
+      });
+      return toast.present();
+    },
+    async checkNetworkStatusChange() {
+      let connectedRef = firebaseDB.ref(".info/connected");
+      connectedRef.on("value", (snap) => {
+        if (snap.val() == true) {
+          // If Online
+          this.checkNewContentOnline();
+        } else if (snap.val() == false) {
+          this.cards[0].hasNewData = false;
+          this.cards[1].hasNewData = false;
+          this.cards[2].hasNewData = false;
+          this.cards[3].hasNewData = false;
+        }
+      });
+    },
+    async checkNewContentOnline() {
+      let checkDatabase = async (dbName) => {
+        const db = await localDB
+          .collection("contents")
+          .doc(dbName)
+          .get();
+        return db;
+      };
+      await Promise.all([
+        (async () => {
+          animalsQuery.onSnapshot((snapshot) => {
+            checkDatabase("animals").then((doc) => {
+              if (snapshot.docs.length != doc["animals"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[0].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[0].hasNewData = false;
+              }
+            });
+          });
+        })(),
+        (async () => {
+          colorsQuery.onSnapshot((snapshot) => {
+            checkDatabase("colors").then((doc) => {
+              if (snapshot.docs.length != doc["colors"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[1].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[1].hasNewData = false;
+              }
+            });
+          });
+        })(),
+        (async () => {
+          numbersQuery.onSnapshot((snapshot) => {
+            checkDatabase("numbers").then((doc) => {
+              if (snapshot.docs.length != doc["numbers"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[2].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[2].hasNewData = false;
+              }
+            });
+          });
+        })(),
+        (async () => {
+          wordsQuery.onSnapshot((snapshot) => {
+            checkDatabase("words").then((doc) => {
+              if (snapshot.docs.length != doc["words"].length) {
+                console.log("NEW DATA ARRIVED");
+                this.cards[3].hasNewData = true;
+              } else {
+                console.log("NO NEW DATA!");
+                this.cards[3].hasNewData = false;
+              }
+            });
+          });
+        })(),
+      ]);
+    },
+    async downloadContent(title) {
+      const loading = await this.presentLoading();
+      this.loading = loading;
+      await loading.present();
+      downloadContent.downloadContentByName(title.toLowerCase());
     },
   },
 };

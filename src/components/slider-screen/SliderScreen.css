@@ -11,14 +11,10 @@ ion-slides {
   justify-items: center;
 }
 
-/* .swiper-slide h2 {
-  margin-top: 2.8rem;
-} */
-
 .swiper-slide img {
   max-height: 50%;
   max-width: 80%;
-  margin: 60px 0 40px;
+  margin: 0px 0px 0px 0px;
   pointer-events: none;
 }
 
@@ -49,4 +45,24 @@ p b {
   font-family: "Exo", sans-serif;
   font-weight: lighter;
   color: rgb(99, 99, 99);
+}
+
+.slide1-text {
+  color: #3880ff;
+  font-weight: bolder;
+}
+
+.slide2-text {
+  color: #eb445a;
+  font-weight: bolder;
+}
+
+.slide3-text {
+  color: #faa329;
+  font-weight: bolder;
+}
+
+.slide4-text {
+  color: #3880ff;
+  font-weight: bolder;
 }

@@ -29,14 +29,15 @@ export default {
       routerParam: this.$route.params.id,
     };
   },
-  created() {
+  ionViewWillEnter() {
     this.statusBar();
   },
   methods: {
-    statusBar() {
-      StatusBar.setBackgroundColor({
+    async statusBar() {
+      const statusBar = await StatusBar.setBackgroundColor({
         color: "#ec29fa",
       });
+      return statusBar;
     },
   },
 };
