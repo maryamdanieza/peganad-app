@@ -11,12 +11,20 @@ let localDB = new Localbase("db");
 localDB.config.debug = false;
 
 class ContentService {
-  async getAnimals() {
+  async getAnimals(cb) {
     let animalArr = [];
-    const res = await animalsQuery.get();
-    res.forEach((r) => {
-      animalArr.push(r.data());
-    });
+    let cursor = 0;
+    const BUFFER = 2;
+    do {
+      const res = await animalsQuery.startAfter(cursor).limit(2).get();
+      res.forEach((r) => {
+        animalArr.push(r.data());
+      });
+      cb({
+        cat: 'animals', status: animalArr.length
+      })
+
+    } while (true)
     return animalArr;
   }
 
