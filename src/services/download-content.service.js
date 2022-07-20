@@ -36,27 +36,28 @@ class DownloadContent {
     );
   }
 
-  async downloadContent() {
+  async downloadContent(cb) {
     let contentObj = {};
     counter = 0;
     await Promise.all([
       (async () => {
-        let animals = await contentService.getAnimals();
+        let animals = await contentService.getAnimals(cb);
+        
         contentObj.animals = animals;
         await this.updateContent(contentObj.animals, "animals");
       })(),
       (async () => {
-        let colors = await contentService.getColors();
+        let colors = await contentService.getColors(cb);
         contentObj.colors = colors;
         await this.updateContent(contentObj.colors, "colors");
       })(),
       (async () => {
-        let numbers = await contentService.getNumbers();
+        let numbers = await contentService.getNumbers(cb);
         contentObj.numbers = numbers;
         await this.updateContent(contentObj.numbers, "numbers");
       })(),
       (async () => {
-        let words = await contentService.getWords();
+        let words = await contentService.getWords(cb);
         contentObj.words = words;
         await this.updateContent(contentObj.words, "words");
       })().catch((err) => {
